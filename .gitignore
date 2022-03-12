@@ -1,0 +1,16 @@
+# Ignoring mac os directories
+**/.DS_Store
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# IntelliJ
+/out/
+*.iml
+.idea/*.xml
