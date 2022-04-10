@@ -83,6 +83,39 @@ local function updateText()
     scoreText.text = "Score: " .. score
 end
 
+-- Player Movement and Controls -- Italo
+local function onKeyEvent( event )
+    local pSpeed = 10 -- Speed of the player
+
+    -- If the "a" key was pressed, move the player left
+    if(event.keyName == "a") then
+        player.x = player.x - pSpeed
+    end
+
+    -- If the "d" key was pressed, move the player right
+    if(event.keyName == "d") then
+        player.x = player.x + pSpeed
+    end
+
+    -- If the "w" key was pressed, move the player up
+    if(event.keyName == "w") then
+        player.y = player.y - pSpeed
+    end
+
+    -- If the "s" key was pressed, move the player down
+    if(event.keyName == "s") then
+        player.y = player.y + pSpeed
+    end
+
+    if(event.keyName == "escape") then
+        -- If the "escape" key was pressed, go back to the main menu
+        composer.gotoScene( "main_menu" )
+    end
+end
+ 
+-- Add the key event listener
+Runtime:addEventListener( "key", onKeyEvent )
+
 local function createZombie()
     local newZombie = display.newImageRect( mainLayer, "/resources/images/zombie.png", 120, 120 )
     newZombie.alpha = 0.96
