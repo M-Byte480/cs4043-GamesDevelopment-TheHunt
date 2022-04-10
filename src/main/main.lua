@@ -16,7 +16,8 @@ display.setStatusBar( display.HiddenStatusBar )
 
 math.randomseed( os.time() ) -- Random seed from the number generator
 
-
+-- simpleAI by: https://github.com/NickEnbachtov/plugins-template-library-docs/releases/tag/v1.8
+-- local simpleAI = require 'plugin.simpleAI.plugin.SimpleAI'
 
 --[[
 
@@ -37,6 +38,9 @@ local character
 local gameLoopTimer
 local scoreText
 local timeDisplay
+
+centerX = display.contentCenterX
+centerY = display.contentCenterY
 
 -- We will create 4 layers for display -- Milan
 local backgroundLayer = display.newGroup()
@@ -93,19 +97,145 @@ local function createZombie()
     local whereFrom = math.random( 12 )
     local centerX = display.contentCenterX
     local centerY = display.contentCenterY
+    --[[
+                    Height; 1536
+    -------------------------------------------------
+            |   1   |   2  |    3   |      
+    ------- 0,0                            -------
+    | 4 |          (Screen)                | 10 |
+    | 5 |          Spawning                | 11 |       Width: 864
+    | 6 |         Explained                | 12 |
+    ------                     1536, 864  ---------
+            |   7   |   8   |   9   | 
+    ------------------------------------------------
+
+    ]]
+    
+    
     if (whereFrom >= 1) and (whereFrom <= 3) then
-        -- newZombie.x = centerX
-        -- newZombie.y = centerY + math.random( display.contentHeight )
+        newZombie.x = centerX - 80
+        newZombie.y = centerY + math.random( display.contentHeight )
     elseif (whereFrom >= 4) and (whereFrom <= 6) then
-        -- newZombie.x = centerX + math.random( display.contentWidth )
-        -- newZombie.y = centerY
+        newZombie.x = centerX + math.random( display.contentWidth )
+        newZombie.y = centerY - 80
     elseif (whereFrom >= 7) and (whereFrom <= 9) then
-        -- newZombie.x = centerX
-        -- newZombie.y = centerY - math.random( display.contentHeight )
+        newZombie.x = centerX + 80
+        newZombie.y = centerY - math.random( display.contentHeight )
     elseif (whereFrom >= 10) and (whereFrom <= 12) then
-        -- newZombie.x = centerX - math.random( display.contentWidth )
-        -- newZombie.y = centerY
-    end
-    
-    
+        newZombie.x = centerX - math.random( display.contentWidth )
+        newZombie.y = centerY + 80
+    end 
+
+    characterX, characterY = getPlayerPosition()
+    newZombie:setLinearVelocity( (characterX - newZombie.x), (characterY - newZombie.y)  )
+
+
 end
+
+function getPlayerPosition()
+    if ( dead == false ) then
+        return player.x, player.y
+    end
+end
+
+    
+
+
+--[[
+for i = 1, 10 do
+    createZombie()
+end
+--]]
+
+-- local enemy = simpleAI.newAI(mainLayer, "/resources/images/zombie.png", 100, 300)
+-- enemy.gravityscale = 0
+
+local function dragPlayer( event )
+
+	local ship = event.target
+	local phase = event.phase
+
+	if ( "began" == phase ) then
+		-- Set touch focus on the ship
+		display.currentStage:setFocus( ship )
+		-- Store initial offset position
+		ship.touchOffsetX = event.x - ship.x
+		ship.touchOffsetY = event.y - ship.y
+	elseif ( "moved" == phase ) then
+		-- Move the ship to the new touch position
+		ship.x = event.x - ship.touchOffsetX
+		ship.y = event.y - ship.touchOffsetY
+
+	elseif ( "ended" == phase or "cancelled" == phase ) then
+		-- Release touch focus on the ship
+		display.currentStage:setFocus( nil )
+	end
+
+	return true  -- Prevents touch propagation to underlying objects
+end
+
+local function shoot()
+
+	local newLaser = display.newImageRect( mainLayer, "resources/images/bullet.png", 50, 50 )
+	physics.addBody( newLaser, "dynamic", { isSensor=true } )
+	newLaser.isBullet = true
+	newLaser.myName = "laser"
+
+	newLaser.x = player.x
+	newLaser.y = player.y
+    
+	newLaser:toBack()
+    -- We do some calculations
+    -- We will translate 0,0 to the center
+
+    local playerx, playery = getPlayerPosition()
+    --local Y = mouseY - (playery - mouseY) + (playery - mouseY) * 5
+    --local X = mouseX - (playerx - mouseX) + (playerx - mouseX) * 5
+    local Y = mouseY
+    local X = mouseX
+    local transitionTime = 1000
+    local distance = math.sqrt( (X - playerx)^2 + (Y - playery)^2 )
+    ---[[
+    if (distance < 100) then
+        transitionTime = 200
+    elseif (distance < 275) then
+        transitionTime = 350
+    elseif (distance < 325) then
+        transitionTime = 400
+    elseif (distance < 375) then
+        transitionTime = 450
+    elseif (distance < 500) then
+        transitionTime = 600
+    elseif (distance > 1000) then
+        transitionTime = 1200
+    elseif (distance > 1200) then
+        transitionTime = 1400
+    else    
+        transitionTime = 900
+    end
+    --]]
+    print(distance)
+
+	transition.to( newLaser, { y = Y , x = X, time=transitionTime, onComplete = function() display.remove( newLaser ) end
+	} )
+end
+
+-- THE FOLLOWING WAS TAKEN FROM: https://fr.solar2d.net/api/event/mouse/x.html
+mouseX = 0
+mouseY = 0
+-- Called when a mouse event has been received.
+
+local function onMouseEvent( event )
+    -- Print the mouse cursor's current position to the log.
+    local message = "Mouse Position = (" .. tostring(event.x) .. "," .. tostring(event.y) .. ")"
+    print( message )
+    -- Update the mouseX and mouseY variables.
+    mouseX = event.x
+    mouseY = event.y
+end
+                             
+-- Add the mouse event listener.
+Runtime:addEventListener( "mouse", onMouseEvent )
+
+player:addEventListener( "touch", dragPlayer )
+background:addEventListener("tap", shoot)
