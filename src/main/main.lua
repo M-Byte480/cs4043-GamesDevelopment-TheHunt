@@ -11,6 +11,7 @@
 -- We will only need physics for the collision detection
 local physics = require( "physics" )
 physics.start()
+physics.setGravity( 0, 0 ) -- We wont need gravity
 
 display.setStatusBar( display.HiddenStatusBar )
 local collisionFilters = require( "plugin.collisionFilters" ) -- Frpm Corona Labs https://docs.coronalabs.com/plugin/collisionFilters/index.html
@@ -39,6 +40,7 @@ local score = 0
 local kills = 0
 local seconds = 0
 local minutes = 0
+
 local zombiesArray = {}
 
 local character
@@ -60,8 +62,6 @@ local userInterface = display.newGroup()
 
 -- We will create image objects and insert them into their corresponding groups ~ Milan
 local background = display.newImageRect( backgroundLayer, "/resources/images/background.png", display.contentWidth, display.contentHeight )
--- local boulder = display.newImage( mainLayer, "/resources/images/boulder.jpg", 100, 100 )
--- local tree = display.newImage( treesLayer, "/resources/images/trees.jpg", 100, 100 )
 local player = display.newImageRect( mainLayer, "/resources/images/character.png", 100, 100 )
 
 -- We will display them in the correct position -- Milan
@@ -71,8 +71,8 @@ background.y = display.contentCenterY
 player.x = display.contentCenterX
 player.y = display.contentCenterY
 player.alpha = 0.96 -- Slight transparency gives a nice effect and the player will intake more detail -- Milan
-physics.addBody( player, "dynamic", { radius = 50, isSensor = true } )
-player.gravityScale = 0 -- We want to interact with objects, but not be affacted by gravity since its topdown -- Milan
+--physics.addBody( player, "dynamic", { radius = 50, isSensor = true } )
+physics.addBody( player, { radius = 50 } )
 player.myName = "character"   
 
 
@@ -85,6 +85,11 @@ scoreText:setFillColor( 255 , 0 , 0 , 0.9 ) -- Note to self, Syntax is the follo
 
 killCount = display.newText( userInterface , "Kills: " .. kills, display.contentCenterX + horizontalText, verticalText + 40 , native.systemFont, 40 )
 killCount:setFillColor( 255 , 0 , 0 , 0.9 )
+
+local function updateText()
+    killCount.text = "Kills: " .. kills
+    scoreText.text = "Score: " .. score
+end
 
 local border = display.newLine(mainLayer, 15, 15, 15, display.contentHeight - 15, display.contentWidth - 15, display.contentHeight - 15, display.contentWidth + 15, 0, 0, 0)
 border:setStrokeColor(1, 0, 0, 1)
@@ -144,18 +149,13 @@ function shuffle(tbl)
 	end
     return tbl
 end
-local function updateText()
-    killCount.text = "Kills: " .. kills
-    scoreText.text = "Score: " .. score
-end
 
 local function createZombie()
     local newZombie = display.newImageRect( mainLayer, "/resources/images/zombie.png", 120, 120 )
     newZombie.alpha = 0.96
     newZombie.myName = "zombie"
-    physics.addBody( newZombie, "dynamic", { radius = 50, isSensor = true } )
-    newZombie.gravityScale = 0
-    -- zombiesArray.insert( zombiesArray, newZombie )
+    table.insert( zombiesArray, newZombie )
+    physics.addBody( newZombie, "dynamic", { radius = 50, friction = 10 } )
     local whereFrom = math.random( 12 )
  
     --[[
@@ -199,15 +199,6 @@ function getPlayerPosition()
     end
 end
 
-    
-
-
---[[
-for i = 1, 10 do
-    createZombie()
-end
---]]
-
 -- local enemy = simpleAI.newAI(mainLayer, "/resources/images/zombie.png", 100, 300)
 -- enemy.gravityscale = 0
 
@@ -235,60 +226,25 @@ local function dragPlayer( event )
 	return true  -- Prevents touch propagation to underlying objects
 end
 
---[[
--- Player Movement and Controls -- Italo
-local function onKeyEvent( event )
-    local pSpeed = 10 -- Speed of the player
 
-    -- If the "a" key was pressed, move the player left
-    if(event.keyName == "a") then
-        player.x = player.x - pSpeed
-    end
-
-    -- If the "d" key was pressed, move the player right
-    if(event.keyName == "d") then
-        player.x = player.x + pSpeed
-    end
-
-    -- If the "w" key was pressed, move the player up
-    if(event.keyName == "w") then
-        player.y = player.y - pSpeed
-    end
-
-    -- If the "s" key was pressed, move the player down
-    if(event.keyName == "s") then
-        player.y = player.y + pSpeed
-    end
-
-    if(event.keyName == "escape") then
-        -- If the "escape" key was pressed, go back to the main menu
-        composer.gotoScene( "main_menu" )
-    end
-end]]
--- physics.addBody( newLaser, "dynamic", { isSensor=true } )
----[[
 local xAxis = 0
 local yAxis = 0
 local A = false
 local D = false
 local W = false
 local S = false 
--- Player Movement and Controls -- Italo
-local function onKeyEvent( event )
-    -- local pSpeed = 10 -- Speed of the player
-    local speed = 150 -- Speed of the player
 
-    
+-- Player Movement and Controls -- Italo & Milan
+local function onKeyEvent( event )
+    local speed = 500 -- Speed of the player
+
     -- If the "a" key was pressed, move the player left
     if(event.keyName == "a" and event.phase == "down" ) then
-        -- player.x = player.x - pSpeed
-        -- player:setLinearVelocity( -50, 0 )
         xAxis = xAxis + speed * -1
         A = true
     end
     
     if(event.keyName == "a" and event.phase == "up") then
-        -- player.x = player.x - pSpeed
         xAxis = xAxis + speed 
         A = false
     end
@@ -303,17 +259,12 @@ local function onKeyEvent( event )
         yAxis = yAxis + speed * -1
         S = false
     end    
-    
-
     if(event.keyName == "w" and event.phase == "down"  ) then
-        -- player.x = player.x - pSpeed
-        -- player:setLinearVelocity( 0, -50 )
         yAxis = yAxis + speed * -1
         W = true
     end
 
     if(event.keyName == "w" and event.phase == "up"  ) then
-        -- player.x = player.x - pSpeed
         yAxis = yAxis + speed
         W = false
     end
@@ -351,15 +302,15 @@ Runtime:addEventListener( "key", onKeyEvent )
 
 local function shoot()
 
-	local newLaser = display.newImageRect( mainLayer, "resources/images/bullet.png", 50, 50 )
-	physics.addBody( newLaser, "dynamic", { isSensor=true } )
-	newLaser.isBullet = true
-	newLaser.myName = "laser"
+	local newBullet = display.newImageRect( mainLayer, "resources/images/bullet.png", 50, 50 )
+	physics.addBody( newBullet, "dynamic", { isSensor=true } )
+	newBullet.isBullet = true
+	newBullet.myName = "bullet"
 
-	newLaser.x = player.x
-	newLaser.y = player.y
+	newBullet.x = player.x
+	newBullet.y = player.y
     
-	newLaser:toBack()
+	newBullet:toBack()
     -- We do some calculations
     -- We will translate 0,0 to the center
 
@@ -391,9 +342,20 @@ local function shoot()
     end
     --]]
     print(distance)
+--[[
+    if(X < width) then
+        X = X/2
+    else
+        X = 2 * X
+    end
+    if(Y < height) then
+        Y = Y/2
+    else
+        Y = 2 * Y
+    end
+    ]]
 
-	transition.to( newLaser, { y = Y , x = X, time=transitionTime, onComplete = function() display.remove( newLaser ) end
-	} )
+	transition.to( newBullet, { y = Y, x = X, time=transitionTime, onComplete = function() display.remove( newBullet ) end	} )
 end
 
 -- THE FOLLOWING WAS TAKEN FROM: https://fr.solar2d.net/api/event/mouse/x.html
@@ -413,65 +375,87 @@ local function onMouseEvent( event )
 end
            
 
-local function gameLoop()
-    print("PRINT")
-    -- createZombie()
-    shoot()
-
-end
 
 local function onCollision( event )
-
+    
 	if ( event.phase == "began" ) then
-
+        
 		local obj1 = event.object1
 		local obj2 = event.object2
 
 		if ( ( obj1.myName == "border" and obj2.myName == "character" ) or
-			 ( obj1.myName == "character" and obj2.myName == "border" ) )
+        ( obj1.myName == "character" and obj2.myName == "border" ) )
 		then
 			-- Remove both the laser and asteroid
-			-- display.remove( obj1 )
-			-- display.remove( obj2 )
-            print("World Border")
-            --[[
-			for i = #asteroidsTable, 1, -1 do
-				if ( asteroidsTable[i] == obj1 or asteroidsTable[i] == obj2 ) then
-					table.remove( asteroidsTable, i )
-					break
-				end
-			end
 
-			-- Increase score
-			score = score + 100
-			scoreText.text = "Score: " .. score
-]]
-		elseif ( ( obj1.myName == "ship" and obj2.myName == "asteroid" ) or
-				 ( obj1.myName == "asteroid" and obj2.myName == "ship" ) )
+            
+		elseif ( ( obj1.myName == "character" and obj2.myName == "zombie" ) or
+        ( obj1.myName == "zombie" and obj2.myName == "character" ) )
 		then
 			if ( died == false ) then
 				died = true
-
+                
 				-- Update lives
 				lives = lives - 1
 				livesText.text = "Lives: " .. lives
-
+                
 				if ( lives == 0 ) then
-					display.remove( ship )
+					display.remove( player )
 					timer.performWithDelay( 2000, endGame )
 				else
-					ship.alpha = 0
+					player.alpha = 0
 					timer.performWithDelay( 1000, restoreShip )
 				end
 			end
-		end
-	end
+            
+        elseif ( ( obj1.myName == "bullet" and obj2.myName == "zombie" ) or
+        ( obj1.myName == "zombie" and obj2.myName == "bullet" ) ) then
+            display.remove( obj1 )
+            display.remove( obj2 )
+            print("CRASHED")
+ 
+            for i = #zombiesArray, 1, -1 do
+                if ( zombiesArray[i] == obj1 or zombiesArray[i] == obj2 ) then
+                    table.remove( zombiesArray, i )
+                    break
+                end
+            end
+            
+            -- Increase score
+            score = score + 100
+            scoreText.text = "Score: " .. score
+            
+	    end
+    end
 end
+
+
+local function gameLoop()
+    -- print("PRINT")
+
+    
+    -- Remove asteroids which have drifted off screen
+    for i = #zombiesArray, 1, -1 do
+        local thisZombie = zombiesArray[i]
+
+        if ( thisZombie.x < -100 or
+            thisZombie.x > display.contentWidth + 100 or
+            thisZombie.y < -100 or
+            thisZombie.y > display.contentHeight + 100 )
+        then
+            display.remove( thisZombie )
+            table.remove( zombiesArray, i )
+        end
+    end
+
+end
+
 
 createTrees()
 createStones()
-gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
-
+gameLoopTimer = timer.performWithDelay( 250, gameLoop, 0 )
+summoning = timer.performWithDelay(1000, createZombie, 0)
+fireRate = timer.performWithDelay(500, shoot, 0)
 -- Add the mouse event listener.
 Runtime:addEventListener( "mouse", onMouseEvent )
 
