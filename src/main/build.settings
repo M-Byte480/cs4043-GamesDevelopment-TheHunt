@@ -40,13 +40,9 @@ settings =
 	--
 	-- Plugins section
 	--
-	-- We have a plugin from Corona Labs to help us with collision filtering
 	plugins =
 	{
-		["plugin.collisionFilters"] =
-        {
-            publisherId = "com.coronalabs"
-        },
+
 	},
 
 	--
