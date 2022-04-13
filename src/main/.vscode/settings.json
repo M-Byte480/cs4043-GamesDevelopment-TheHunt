@@ -1,0 +1,10 @@
+{
+    "Lua.diagnostics.globals": [
+        "transitionTime",
+        "mouseX",
+        "mouseY",
+        "speedCheck",
+        "translateOrigin",
+        "transition"
+    ]
+}
