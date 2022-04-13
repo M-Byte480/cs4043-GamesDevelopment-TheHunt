@@ -80,7 +80,7 @@ physics.addBody( player, { radius = 50, filter= playerCollisionFilter } )
 player.myName = "character"   
 
 -- =================== WORLD BORDER =================== --
-local border = display.newLine(mainLayer, 15, 15, 15, display.contentHeight - 15, display.contentWidth - 15, display.contentHeight - 15, display.contentWidth + 15, 0, 0, 0)
+local border = display.newLine(mainLayer, -5, 75, width+10, 75, width+10, height - 75,   -5, height - 75, -5, 75)
 border:setStrokeColor(1, 0, 0, 1)
 border.strokeWidth = 8
 border.myName = "border"
@@ -416,7 +416,7 @@ local function gameLoop()
 
     
     -- Remove asteroids which have drifted off screen
-    for i = #zombiesArray, 1, -1 do
+    --[[for i = #zombiesArray, 1, -1 do
         local thisZombie = zombiesArray[i]
 
         if ( thisZombie.x < -100 or
@@ -427,7 +427,8 @@ local function gameLoop()
             display.remove( thisZombie )
             table.remove( zombiesArray, i )
         end
-    end
+    end]]
+    print(getPlayerPosition())
     for i = #zombiesArray, 1 , -1 do
         -- Zombie AI
         local thisZombie = zombiesArray[i]
@@ -442,8 +443,8 @@ createStones()
 
 -- == Loops such as spawning and shooting == --
 gameLoopTimer = timer.performWithDelay( 250, gameLoop, 0 )
-summoning = timer.performWithDelay(1000, createZombie, 0)
--- fireRate = timer.performWithDelay(750, shoot, 0) -- Auto shoot
+-- summoning = timer.performWithDelay(1/100, createZombie, 0)
+-- fireRate = timer.performWithDelay(1, shoot, 0) -- Auto shoot
 -- AUTO SHOOT WILL BE BETTER THAN TAP AS TAP DOESNT ALWAYS REGISTER 
 
 -- == Listeners == --
