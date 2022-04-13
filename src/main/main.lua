@@ -18,10 +18,8 @@ display.setStatusBar( display.HiddenStatusBar )
 math.randomseed( os.time() ) -- Random seed from the number generator
 
 --[[
-
     The following code format was taken from: 
     https://docs.coronalabs.com/guide/programming/02/index.html
-
 ]]
 -- =============== Collision filters =============== --
 local playerCollisionFilter = { categoryBits=1, maskBits=22 }  
@@ -38,16 +36,26 @@ local score = 0
 local kills = 0
 local seconds = 0
 local minutes = 0
+local health = 100
 
 -- IMPORTANT VARIABLES:
 zombieSpeed = 100
 local zombiesArray = {}
 globalBulletSpeed = 2500
+TimeDuration = 1000
 
 local character
 local gameLoopTimer
+local hourHandTimer
 local scoreText
 local timeDisplay
+local inventoryBox1
+local inventoryBox2
+local crossbowImg
+local torchImg
+local basicClock
+
+
 
 --  =========== Global Screen Size for easy reference =========== --
 local width = display.contentWidth
@@ -67,6 +75,31 @@ local userInterface = display.newGroup()
 -- We will create image objects and insert them into their corresponding groups ~ Milan
 local background = display.newImageRect( backgroundLayer, "/resources/images/background.png", display.contentWidth, display.contentHeight )
 local player = display.newImageRect( mainLayer, "/resources/images/character.png", 100, 100 )
+
+local inventoryBox1 = display.newImageRect( userInterface, "/resources/images/InventoryIcon.png" , 75, 75)
+inventoryBox1.x = display.contentCenterX - 600
+inventoryBox1.y = display.contentCenterY + 300
+
+local inventoryBox2 = display.newImageRect( userInterface, "/resources/images/InventoryIcon.png", 75, 75)
+inventoryBox2.x = display.contentCenterX - 700
+inventoryBox2.y = display.contentCenterY + 300
+
+local crossbowImg = display.newImageRect( userInterface, "/resources/images/crossbow.png", 40, 40)
+crossbowImg.x = display.contentCenterX - 700
+crossbowImg.y = display.contentCenterY +300
+
+local torchImg = display.newImageRect( userInterface, "/resources/images/torch.png", 50, 50)
+torchImg.x = display.contentCenterX - 600
+torchImg.y = display.contentCenterY + 300
+
+local basicClock = display.newImageRect( userInterface, "/resources/images/clock.png", 150, 150)
+basicClock.x = display.contentCenterX 
+basicClock.y = display.contentCenterY -270
+
+local clockhand = display.newImageRect(userInterface, "/resources/images/clockhand.png" , 80,60)
+clockhand.x = display.contentCenterX
+clockhand.y = display.contentCenterY -295
+
 
 -- We will display them in the correct position -- Milan
 background.x = display.contentCenterX
@@ -92,15 +125,15 @@ physics.addBody( border, "static", { filter = borderCollisionFilter } )
 local horizontalText = 600
 local verticalText = 120
 
-scoreText = display.newText( userInterface , "Points: " .. score, display.contentCenterX + horizontalText + 20, verticalText , native.systemFont, 40 )
-scoreText:setFillColor( 255 , 0 , 0 , 0.9 ) -- Note to self, Syntax is the following: R,G,B,Alpha -- Milan
+killCount = display.newText( userInterface , "Total kills: " .. kills, display.contentCenterX + horizontalText, verticalText + 10 , native.systemFont, 35 )
+killCount:setFillColor( 0 , 0, 0 , 0.9 )
 
-killCount = display.newText( userInterface , "Kills: " .. kills, display.contentCenterX + horizontalText, verticalText + 40 , native.systemFont, 40 )
-killCount:setFillColor( 255 , 0 , 0 , 0.9 )
+healthText = display.newText( userInterface, "Health: " .. health .. "hp", display.contentCenterX - horizontalText, verticalText + 10, native.systemFont, 35)
+healthText:setFillColor( 0 , 0, 0 , 0.9 )
 
 local function updateText()
-    killCount.text = "Kills: " .. kills
-    scoreText.text = "Score: " .. score
+    killCount.text = "Total kills: " .. kills
+    healthText.text = "Health: " .. health .. "hp"
 end
 
 -- ================== Functions =================== --
@@ -240,8 +273,6 @@ end
 
 -- ====== Returns coordinate of the point that is meant to be circle of given the radius and angle ====== --
 function translateOrigin(x1, y1, x2, y2, angle, radius)
-    x2 = x2 - x1
-    y2 = y2 - y1
     
     x2 = radius * math.cos(angle)
     x2 = x2 + x1
@@ -313,8 +344,30 @@ local function onKeyEvent( event )
     return true
 end
 
+-- =========== Clock movement =========== --
+local clockhand = display.newImageRect(userInterface,"/resources/images/clockhand.png", 80 , 60)
+local n = 0
+local angle = 30
+local centerOfClockX = basicClock.x
+local centerOfClockY = basicClock.y
 
+local function moveHourHand()
 
+    -- local X1, Y1 = moveHandle()
+    clockhand:rotate(angle)
+    -- clockhand.x = X1
+    -- clockhand.y = Y1
+    clockhand.x = centerOfClockX
+    clockhand.y = centerOfClockY
+    -- return moveHourHand
+    
+end
+--[[
+function moveHandle()
+    local clockhandHalf = clockhand.height / 2
+    local x1, y1 = translateOrigin(centerOfClockX, centerOfClockY, clockhand.x, clockhand.y, 30, clockhandHalf)
+    
+end]]
 -- =========== Shoot Function =========== --
 local function shoot()
     transitionTime = globalBulletSpeed
@@ -376,10 +429,10 @@ local function onCollision( event )
 				died = true
                 
 				-- Update lives
-				lives = lives - 1
-				livesText.text = "Lives: " .. lives
+				health = health - 1
+				healthText.text = "Health: " .. health
                 
-				if ( lives == 0 ) then
+				if ( health == 0 ) then
 					display.remove( player )
 					timer.performWithDelay( 2000, endGame )
 				else
@@ -402,9 +455,9 @@ local function onCollision( event )
                 end
             end
             
-            -- Increase score
-            score = score + 100
-            scoreText.text = "Score: " .. score
+            -- Increase kill count
+            kills = kills + 1
+            killCount.text = "Total kills: " .. kills
         end 
     end
 end
@@ -416,7 +469,7 @@ local function gameLoop()
 
     
     -- Remove asteroids which have drifted off screen
-    --[[for i = #zombiesArray, 1, -1 do
+    for i = #zombiesArray, 1, -1 do
         local thisZombie = zombiesArray[i]
 
         if ( thisZombie.x < -100 or
@@ -427,8 +480,7 @@ local function gameLoop()
             display.remove( thisZombie )
             table.remove( zombiesArray, i )
         end
-    end]]
-    print(getPlayerPosition())
+    end
     for i = #zombiesArray, 1 , -1 do
         -- Zombie AI
         local thisZombie = zombiesArray[i]
@@ -441,10 +493,12 @@ end
 createTrees()
 createStones()
 
+
 -- == Loops such as spawning and shooting == --
 gameLoopTimer = timer.performWithDelay( 250, gameLoop, 0 )
--- summoning = timer.performWithDelay(1/100, createZombie, 0)
--- fireRate = timer.performWithDelay(1, shoot, 0) -- Auto shoot
+-- summoning = timer.performWithDelay(1000, createZombie, 0)
+hourHandTimer = timer.performWithDelay(1000, moveHourHand , -1 )
+-- fireRate = timer.performWithDelay(750, shoot, 0) -- Auto shoot
 -- AUTO SHOOT WILL BE BETTER THAN TAP AS TAP DOESNT ALWAYS REGISTER 
 
 -- == Listeners == --
@@ -452,3 +506,4 @@ Runtime:addEventListener( "key", onKeyEvent ) -- Add the key event listener
 Runtime:addEventListener( "mouse", onMouseEvent ) -- Add the mouse event listener.
 background:addEventListener("tap", shoot)
 Runtime:addEventListener( "collision", onCollision )
+-- Runtime:addEventListener("hour-change", hourHandTimer)
