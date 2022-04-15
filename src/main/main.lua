@@ -18,8 +18,10 @@ display.setStatusBar( display.HiddenStatusBar )
 math.randomseed( os.time() ) -- Random seed from the number generator
 
 --[[
+
     The following code format was taken from: 
     https://docs.coronalabs.com/guide/programming/02/index.html
+
 ]]
 -- =============== Collision filters =============== --
 local playerCollisionFilter = { categoryBits=1, maskBits=22 }  
@@ -73,7 +75,7 @@ local userInterface = display.newGroup()
 
 -- =================== Background and player Spawning =================== --
 -- We will create image objects and insert them into their corresponding groups ~ Milan
-local background = display.newImageRect( backgroundLayer, "/resources/images/background.png", display.contentWidth, display.contentHeight )
+-- local background = display.newImageRect( backgroundLayer, "/resources/images/background.png", display.contentWidth, display.contentHeight )
 local player = display.newImageRect( mainLayer, "/resources/images/character.png", 100, 100 )
 
 local inventoryBox1 = display.newImageRect( userInterface, "/resources/images/InventoryIcon.png" , 75, 75)
@@ -99,11 +101,482 @@ basicClock.y = display.contentCenterY -270
 local clockhand = display.newImageRect(userInterface, "/resources/images/clockhand.png" , 80,60)
 clockhand.x = display.contentCenterX
 clockhand.y = display.contentCenterY -295
+-- NEW BACKGROUND GENERATION 
+
+local function backgroundGrass()
+
+    local topOne = math.random(6)
+    local topTwo = math.random(6)
+    local topThree = math.random(6)
+    local botOne = math.random(6)
+    local botTwo = math.random(6)
+    local botThree = math.random(6)
+
+    -- tile 1 
+
+    if topOne == 1 then
+      local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+      a.x = display.contentCenterX - 500
+      a.y = display.contentCenterY - 175
+    elseif topOne == 2 then
+        local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+        b.x = display.contentCenterX - 500
+        b.y = display.contentCenterY - 175
+      
+    elseif topOne == 3 then
+        local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+        c.x = display.contentCenterX - 500
+        c.y = display.contentCenterY - 175
+
+    elseif topOne == 4 then
+        local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+        d.x = display.contentCenterX - 500
+        d.y = display.contentCenterY - 175
+
+    elseif topOne == 5 then
+        local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+        e.x = display.contentCenterX - 500
+        e.y = display.contentCenterY - 175
+
+    elseif topOne == 6 then
+        local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+        f.x = display.contentCenterX - 500
+        f.y = display.contentCenterY - 175
+
+    end
+
+    -- tile 2 ( ITS CENTERED )
+    if topTwo == 1 then
+        local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+        a.x = display.contentCenterX 
+        a.y = display.contentCenterY - 175
+      elseif topTwo == 2 then
+          local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+          b.x = display.contentCenterX 
+          b.y = display.contentCenterY - 175
+        
+      elseif topTwo == 3 then
+          local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+          c.x = display.contentCenterX
+          c.y = display.contentCenterY - 175
+  
+      elseif topTwo == 4 then
+          local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+          d.x = display.contentCenterX 
+          d.y = display.contentCenterY - 175
+  
+      elseif topTwo == 5 then
+          local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+          e.x = display.contentCenterX 
+          e.y = display.contentCenterY - 175
+  
+      elseif topTwo == 6 then
+          local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+          f.x = display.contentCenterX 
+          f.y = display.contentCenterY - 175
+  
+      end
+
+
+      -- tile 3 (INVERSE OF TILE 1)
+      if topThree == 1 then
+        local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+        a.x = display.contentCenterX + 500
+        a.y = display.contentCenterY - 175
+      elseif topThree == 2 then
+          local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+          b.x = display.contentCenterX + 500
+          b.y = display.contentCenterY - 175
+        
+      elseif topThree == 3 then
+          local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+          c.x = display.contentCenterX + 500
+          c.y = display.contentCenterY - 175
+  
+      elseif topThree == 4 then
+          local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+          d.x = display.contentCenterX + 500
+          d.y = display.contentCenterY - 175
+  
+      elseif topThree == 5 then
+          local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+          e.x = display.contentCenterX + 500
+          e.y = display.contentCenterY - 175
+  
+      elseif topThree == 6 then
+          local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+          f.x = display.contentCenterX + 500
+          f.y = display.contentCenterY - 175
+  
+      end
+
+      -- TILE 4 (INVERSE Y OF 1)
+      if botOne == 1 then
+        local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+        a.x = display.contentCenterX - 500
+        a.y = display.contentCenterY + 175
+      elseif botOne == 2 then
+          local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+          b.x = display.contentCenterX - 500
+          b.y = display.contentCenterY + 175
+        
+      elseif botOne == 3 then
+          local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+          c.x = display.contentCenterX - 500
+          c.y = display.contentCenterY + 175
+  
+      elseif botOne == 4 then
+          local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+          d.x = display.contentCenterX - 500
+          d.y = display.contentCenterY + 175
+  
+      elseif botOne == 5 then
+          local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+          e.x = display.contentCenterX - 500
+          e.y = display.contentCenterY + 175
+  
+      elseif botOne == 6 then
+          local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+          f.x = display.contentCenterX - 500
+          f.y = display.contentCenterY + 175
+  
+      end
+
+      -- tile 5 ( ITS CENTERED )
+    if botTwo == 1 then
+        local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+        a.x = display.contentCenterX 
+        a.y = display.contentCenterY + 175
+      elseif botTwo == 2 then
+          local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+          b.x = display.contentCenterX 
+          b.y = display.contentCenterY + 175
+        
+      elseif botTwo == 3 then
+          local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+          c.x = display.contentCenterX
+          c.y = display.contentCenterY + 175
+  
+      elseif botTwo == 4 then
+          local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+          d.x = display.contentCenterX 
+          d.y = display.contentCenterY + 175
+  
+      elseif botTwo == 5 then
+          local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+          e.x = display.contentCenterX 
+          e.y = display.contentCenterY + 175
+  
+      elseif botTwo == 6 then
+          local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+          f.x = display.contentCenterX 
+          f.y = display.contentCenterY + 175
+  
+      end
+
+      -- tile 6 (INVERSE OF TILE 3)
+      if topThree == 1 then
+        local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+        a.x = display.contentCenterX + 500
+        a.y = display.contentCenterY + 175
+      elseif topThree == 2 then
+          local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+          b.x = display.contentCenterX + 500
+          b.y = display.contentCenterY + 175
+        
+      elseif topThree == 3 then
+          local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+          c.x = display.contentCenterX + 500
+          c.y = display.contentCenterY + 175
+  
+      elseif topThree == 4 then
+          local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+          d.x = display.contentCenterX + 500
+          d.y = display.contentCenterY + 175
+  
+      elseif topThree == 5 then
+          local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+          e.x = display.contentCenterX + 500
+          e.y = display.contentCenterY + 175
+  
+      elseif topThree == 6 then
+          local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+          f.x = display.contentCenterX + 500
+          f.y = display.contentCenterY + 175
+  
+      end
+
+ 
+
+end
+
+
+local function backgroundSnow()
+
+    local topOne = math.random(6)
+    local topTwo = math.random(6)
+    local topThree = math.random(6)
+    local botOne = math.random(6)
+    local botTwo = math.random(6)
+    local botThree = math.random(6)
+
+    -- tile 1 
+
+    if topOne == 1 then
+      local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+      a.x = display.contentCenterX - 500
+      a.y = display.contentCenterY - 175
+    elseif topOne == 2 then
+        local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+        b.x = display.contentCenterX - 500
+        b.y = display.contentCenterY - 175
+      
+    elseif topOne == 3 then
+        local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+        c.x = display.contentCenterX - 500
+        c.y = display.contentCenterY - 175
+
+    elseif topOne == 4 then
+        local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+        d.x = display.contentCenterX - 500
+        d.y = display.contentCenterY - 175
+
+    elseif topOne == 5 then
+        local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+        e.x = display.contentCenterX - 500
+        e.y = display.contentCenterY - 175
+
+    elseif topOne == 6 then
+        local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+        f.x = display.contentCenterX - 500
+        f.y = display.contentCenterY - 175
+
+    end
+
+    -- tile 2 ( ITS CENTERED )
+    if topTwo == 1 then
+        local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+        a.x = display.contentCenterX 
+        a.y = display.contentCenterY - 175
+      elseif topTwo == 2 then
+          local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+          b.x = display.contentCenterX 
+          b.y = display.contentCenterY - 175
+        
+      elseif topTwo == 3 then
+          local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+          c.x = display.contentCenterX
+          c.y = display.contentCenterY - 175
+  
+      elseif topTwo == 4 then
+          local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+          d.x = display.contentCenterX 
+          d.y = display.contentCenterY - 175
+  
+      elseif topTwo == 5 then
+          local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+          e.x = display.contentCenterX 
+          e.y = display.contentCenterY - 175
+  
+      elseif topTwo == 6 then
+          local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+          f.x = display.contentCenterX 
+          f.y = display.contentCenterY - 175
+  
+      end
+
+
+      -- tile 3 (INVERSE OF TILE 1)
+      if topThree == 1 then
+        local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+        a.x = display.contentCenterX + 500
+        a.y = display.contentCenterY - 175
+      elseif topThree == 2 then
+          local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+          b.x = display.contentCenterX + 500
+          b.y = display.contentCenterY - 175
+        
+      elseif topThree == 3 then
+          local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+          c.x = display.contentCenterX + 500
+          c.y = display.contentCenterY - 175
+  
+      elseif topThree == 4 then
+          local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+          d.x = display.contentCenterX + 500
+          d.y = display.contentCenterY - 175
+  
+      elseif topThree == 5 then
+          local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+          e.x = display.contentCenterX + 500
+          e.y = display.contentCenterY - 175
+  
+      elseif topThree == 6 then
+          local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+          f.x = display.contentCenterX + 500
+          f.y = display.contentCenterY - 175
+  
+      end
+
+      -- TILE 4 (INVERSE Y OF 1)
+      if botOne == 1 then
+        local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+        a.x = display.contentCenterX - 500
+        a.y = display.contentCenterY + 175
+      elseif botOne == 2 then
+          local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+          b.x = display.contentCenterX - 500
+          b.y = display.contentCenterY + 175
+        
+      elseif botOne == 3 then
+          local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+          c.x = display.contentCenterX - 500
+          c.y = display.contentCenterY + 175
+  
+      elseif botOne == 4 then
+          local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+          d.x = display.contentCenterX - 500
+          d.y = display.contentCenterY + 175
+  
+      elseif botOne == 5 then
+          local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+          e.x = display.contentCenterX - 500
+          e.y = display.contentCenterY + 175
+  
+      elseif botOne == 6 then
+          local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+          f.x = display.contentCenterX - 500
+          f.y = display.contentCenterY + 175
+  
+      end
+
+      -- tile 5 ( ITS CENTERED )
+    if botTwo == 1 then
+        local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+        a.x = display.contentCenterX 
+        a.y = display.contentCenterY + 175
+      elseif botTwo == 2 then
+          local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+          b.x = display.contentCenterX 
+          b.y = display.contentCenterY + 175
+        
+      elseif botTwo == 3 then
+          local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+          c.x = display.contentCenterX
+          c.y = display.contentCenterY + 175
+  
+      elseif botTwo == 4 then
+          local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+          d.x = display.contentCenterX 
+          d.y = display.contentCenterY + 175
+  
+      elseif botTwo == 5 then
+          local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+          e.x = display.contentCenterX 
+          e.y = display.contentCenterY + 175
+  
+      elseif botTwo == 6 then
+          local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+          f.x = display.contentCenterX 
+          f.y = display.contentCenterY + 175
+  
+      end
+
+      -- tile 6 (INVERSE OF TILE 3)
+      if topThree == 1 then
+        local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+        a.x = display.contentCenterX + 500
+        a.y = display.contentCenterY + 175
+      elseif topThree == 2 then
+          local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+          b.x = display.contentCenterX + 500
+          b.y = display.contentCenterY + 175
+        
+      elseif topThree == 3 then
+          local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+          c.x = display.contentCenterX + 500
+          c.y = display.contentCenterY + 175
+  
+      elseif topThree == 4 then
+          local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+          d.x = display.contentCenterX + 500
+          d.y = display.contentCenterY + 175
+  
+      elseif topThree == 5 then
+          local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+          e.x = display.contentCenterX + 500
+          e.y = display.contentCenterY + 175
+  
+      elseif topThree == 6 then
+          local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+          f.x = display.contentCenterX + 500
+          f.y = display.contentCenterY + 175
+  
+      end
+
+ 
+
+end
+
+
+
 
 
 -- We will display them in the correct position -- Milan
-background.x = display.contentCenterX
-background.y = display.contentCenterY
+-- background.x = display.contentCenterX
+-- background.y = display.contentCenterY
+-- background.x = display.contentCenterX
+-- background.y = display.contentCenterY
+
+
+-- night
+
+local darkLayer = display.newImageRect(userInterface, "nightOverlay.png", 1536, 864)
+darkLayer.x = display.contentCenterX
+darkLayer.y = display.contentCenterY
+darkLayer.alpha = 0
+
+--timer.performWithDelay(3000, nightCycle)
+
+
+
+
+
+-- SPRITE FOR BUSH SPAWNING
+local sheetOptions =
+{
+    width = 88,
+    height = 85,
+    numFrames = 5
+}
+
+local sheet_bush = graphics.newImageSheet("bushSprite.png", sheetOptions )
+
+-- sequence table 
+local sequencesBush = {
+    -- consecutive frames sequence
+    {
+        name = "normalRun",
+        start = 3,
+        count = 4,
+        time = 2000,
+        loopCount = 0,
+        loopDirection = "forward"
+    }
+}
+
+
+-- ===== Bush Spawner ===== --
+local bush = display.newSprite(backgroundLayer ,sheet_bush, sequencesBush, bushSizeH, bushSizeW)
+    local num = math.random(2,10)
+    for i = 1, num, 1 do
+    
+        bush.x = math.random(50, display.contentWidth-50)
+        bush.y = math.random(50, display.contentHeight-50)
+        bush.myName = "bush"
+        bush.alpha = 1
+    end
+bush:play()
 
 -- === Player === --
 player.x = display.contentCenterX
@@ -113,12 +586,43 @@ physics.addBody( player, { radius = 50, filter= playerCollisionFilter } )
 player.myName = "character"   
 
 -- =================== WORLD BORDER =================== --
+-- local border = display.newLine(mainLayer, 15, 15, 15, display.contentHeight - 15, display.contentWidth - 15, display.contentHeight - 15, display.contentWidth + 15, 0, 0, 0)
 local border = display.newLine(mainLayer, -5, 75, width+10, 75, width+10, height - 75,   -5, height - 75, -5, 75)
 border:setStrokeColor(1, 0, 0, 1)
 border.strokeWidth = 8
 border.myName = "border"
 physics.addBody( border, "static", { filter = borderCollisionFilter } )
 
+local function worldBorder()
+
+    local borderTree = display.newImageRect(mainLayer, "TREEBORDER.PNG", 134, 864)
+
+    borderTree.x = display.contentCenterX - 750
+    borderTree.y = display.contentCenterY
+
+    local borderTreeLEFT = display.newImageRect(mainLayer, "TREEBORDER.PNG", 134, 864)
+    borderTreeLEFT.x = display.contentCenterX + 750
+    borderTreeLEFT.y = display.contentCenterY
+    borderTreeLEFT:scale(-1, 1)
+    
+
+
+end
+
+local function worldBorderSnow()
+
+    local borderTree = display.newImageRect(mainLayer, "snowyBorder.png", 134, 864)
+
+    borderTree.x = display.contentCenterX - 750
+    borderTree.y = display.contentCenterY
+
+    local borderTreeLEFT = display.newImageRect(mainLayer, "snowyBorder.png", 134, 864)
+    borderTreeLEFT.x = display.contentCenterX + 750
+    borderTreeLEFT.y = display.contentCenterY
+    borderTreeLEFT:scale(-1, 1)
+
+
+end
 
 -- =================== User Interface =================== --
 -- If we want to move the text as a group, just alternate these values -- Milan
@@ -128,12 +632,21 @@ local verticalText = 120
 killCount = display.newText( userInterface , "Total kills: " .. kills, display.contentCenterX + horizontalText, verticalText + 10 , native.systemFont, 35 )
 killCount:setFillColor( 0 , 0, 0 , 0.9 )
 
+-- scoreText = display.newText( userInterface , "Points: " .. score, display.contentCenterX + horizontalText + 20, verticalText , native.systemFont, 40 )
+-- scoreText:setFillColor( 255 , 0 , 0 , 0.9 ) -- Note to self, Syntax is the following: R,G,B,Alpha -- Milan
+
 healthText = display.newText( userInterface, "Health: " .. health .. "hp", display.contentCenterX - horizontalText, verticalText + 10, native.systemFont, 35)
 healthText:setFillColor( 0 , 0, 0 , 0.9 )
 
+-- killCount = display.newText( userInterface , "Kills: " .. kills, display.contentCenterX + horizontalText, verticalText + 40 , native.systemFont, 40 )
+-- killCount:setFillColor( 255 , 0 , 0 , 0.9 )
+
 local function updateText()
-    killCount.text = "Total kills: " .. kills
+    -- killCount.text = "Total kills: " .. kills
     healthText.text = "Health: " .. health .. "hp"
+
+    killCount.text = "Kills: " .. kills
+    -- scoreText.text = "Score: " .. score
 end
 
 -- ================== Functions =================== --
@@ -144,12 +657,26 @@ end
 ]]--
 
 -- ===== Tree Spawner ===== --
-local function createTrees()
+local function createNormalTrees()
     local num = math.random(2,5)
     for i = 1, num, 1 do
-        local treeSizeW = math.random(100,250)
-        local treeSizeH = math.random(80,120)
-        local tree = display.newImageRect( treesLayer, "/resources/images/trees.jpg", treeSizeH, treeSizeW )
+        local treeSizeW = math.random(175,250)
+        local treeSizeH = math.random(80,100)
+        local tree = display.newImageRect( treesLayer, "normalTree.png", treeSizeH, treeSizeW )
+        tree.x = math.random(50, display.contentWidth-50)
+        tree.y = math.random(50, display.contentHeight-50)
+        tree.myName = "tree"
+        tree.alpha = 0.8
+        
+    end
+end
+
+local function createSnowyTrees()
+    local num = math.random(2,5)
+    for i = 1, num, 1 do
+        local treeSizeW = math.random(175,250)
+        local treeSizeH = math.random(80,100)
+        local tree = display.newImageRect( treesLayer, "snowyTree1.png", treeSizeH, treeSizeW)
         tree.x = math.random(50, display.contentWidth-50)
         tree.y = math.random(50, display.contentHeight-50)
         tree.myName = "tree"
@@ -165,7 +692,7 @@ local function createStones()
     corners = shuffle(corners)
     -- print(corners)
     for i = 1, num, 1 do
-        local boulder = display.newImageRect( backgroundLayer, "/resources/images/boulder.jpg", 100, 100)
+        local boulder = display.newImageRect( backgroundLayer, "stone.png", 100, 100)
         -- physics.addBody(mainLayer, "static", boulder, { filter = boulderCollisionFilter , radius = 10} )
         local slightAlternation = math.random(0,25)
         local offset = 120 + slightAlternation
@@ -306,13 +833,13 @@ function getAngle(x1, y1, x2, y2)
     return angle
 end
 
--- ====== Returns coordinate of the point that is meant to be circle of given the radius and angle ====== --
-function translateOrigin(x1, y1, x2, y2, angle, radius)
+-- ====== Returns coordinate of the point that is meant to be circle of given the radius, center and angle ====== --
+function translateOrigin(x1, y1, angle, radius)
     
-    x2 = radius * math.cos(angle)
+    local x2 = radius * math.cos(angle)
     x2 = x2 + x1
     
-    y2 = radius * math.sin(angle)
+    local y2 = radius * math.sin(angle)
     y2 = y2 + y1
     
     return x2, y2
@@ -434,7 +961,7 @@ local function shoot()
     local playerx, playery = getPlayerPosition()
     local onCircle = getAngle(playerx, playery, X, Y)
 
-    X, Y = translateOrigin(playerx, playery, X, Y, onCircle, width)
+    X, Y = translateOrigin(playerx, playery, onCircle, width)
     
 	transition.to( newBullet, { y = Y, x = X, time=transitionTime, onComplete = function() display.remove( newBullet ) end	} )
 end
@@ -490,16 +1017,57 @@ local function onCollision( event )
                 end
             end
             
-            -- Increase kill count
-            kills = kills + 1
-            killCount.text = "Total kills: " .. kills
+            -- Increase score
+            -- score = score + 100
+            -- scoreText.text = "Score: " .. score
         end 
     end
 end
 
 -- ========== Loops ========== --
 -- ==== Main Loop ===== --
+
+local function poggers()
+
+    darkLayer.alpha = darkLayer.alpha + 0.1
+
+    print(darkLayer.alpha)
+
+
+end
+
+while darkLayer.alpha < 0.2 and darkLayer.alpha > 0.10 do
+    clockH:rotate(15)
+    
+end
+
+
+local function maskLoop()                                                   -- ## THIS IS THE ONE YOU'RE LOOKING FOR
+
+local mask = graphics.newMask("maskLayer.png")
+darkLayer:setMask(mask)
+darkLayer.maskX , darkLayer.maskY = player.x - 750, player.y - 400
+end
+
+local function maskLoopArc()                                                   -- ## THIS IS THE ONE YOU'RE LOOKING FOR
+
+    local mask = graphics.newMask("maskLayerARC.png", 500, 500)
+    darkLayer:setMask(mask)
+    darkLayer.maskX , darkLayer.maskY = player.x - 775, player.y - 425
+    local x1, y1 = getPlayerPosition()
+    local angle = getAngle(x1, y1, mouseX, mouseY)
+
+    darkLayer.maskRotation = (angle*180/math.pi)
+    end
+
 local function gameLoop()
+
+       --function playerLight(getPlayerPosition)
+
+    --local mask = graphics.newMask("maskLayer.png")
+    --darkLayer:setMask(mask)
+    --darkLayer.maskX , darkLayer.maskY = player.x - 750, player.y - 400
+    --end
     -- print("PRINT")
 
     
@@ -525,20 +1093,80 @@ local function gameLoop()
 end
 -- =================== Main Methods Execution =================== --
 -- == Create a set of trees and stones == --
-createTrees()
-createStones()
 
+
+
+-- createTrees()
+createStones()
+-- clock()
+--createBush()
+--playerLight()
+worldBorder()
+
+
+local BackgroundSelect = math.random(11)
+
+
+
+-- Allocated appropriate trees for map selected above
+if BackgroundSelect <  6 then
+    createNormalTrees()
+else
+    createSnowyTrees()
+end
+-- Allocated appropriate Grass for map selected above
+if BackgroundSelect <  6 then
+    backgroundGrass()
+else
+    backgroundSnow()
+end
+
+if BackgroundSelect <  6 then
+    worldBorder()
+else
+    worldBorderSnow()
+end
+
+
+
+
+-- CLOCK TEST
+local function clock()
+
+    local clockF = display.newImageRect(mainLayer, "clockFace.png", 200, 200 )
+    clockF.x = display.contentCenterX
+    clockF.y = display.contentCenterY - 250
+    clockF.alpha = 1
+    
+    local clockH = display.newImageRect(userInterface, "clockHand.png", 200, 200 )
+    clockH.x = display.contentCenterX 
+    clockH.y = display.contentCenterY - 250
+    
+end
+
+-- clock()
 
 -- == Loops such as spawning and shooting == --
 gameLoopTimer = timer.performWithDelay( 250, gameLoop, 0 )
--- summoning = timer.performWithDelay(1000, createZombie, 0)
+summoning = timer.performWithDelay(1000, createZombie, 0)
 hourHandTimer = timer.performWithDelay(1000, moveHourHand , -1 )
+fireRate = timer.performWithDelay(750, shoot, 0) -- Auto shoot
+-- maskLoopTimer = timer.performWithDelay(1, maskLoop, 0)     
+maskLoopTimer = timer.performWithDelay(1, maskLoopArc, 0)                                          
+
+
+-- timer.performWithDelay(1, clockRotation, 0 )
+
+poggersLoop = timer.performWithDelay(2000, poggers, 0) -- Calling the night cycle function 
+
+
 -- fireRate = timer.performWithDelay(750, shoot, 0) -- Auto shoot
 -- AUTO SHOOT WILL BE BETTER THAN TAP AS TAP DOESNT ALWAYS REGISTER 
 
 -- == Listeners == --
 Runtime:addEventListener( "key", onKeyEvent ) -- Add the key event listener
 Runtime:addEventListener( "mouse", onMouseEvent ) -- Add the mouse event listener.
-background:addEventListener("tap", shoot)
+-- background:addEventListener("tap", shoot)
+darkLayer:addEventListener("tap", shoot)
 Runtime:addEventListener( "collision", onCollision )
 -- Runtime:addEventListener("hour-change", hourHandTimer)
