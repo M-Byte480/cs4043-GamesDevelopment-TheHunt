@@ -71,6 +71,7 @@ centerY = display.contentCenterY
 local backgroundLayer = display.newGroup()
 local mainLayer = display.newGroup()
 local treesLayer = display.newGroup()
+local darknessLayer = display.newGroup()
 local userInterface = display.newGroup()
 
 -- =================== Background and player Spawning =================== --
@@ -531,7 +532,7 @@ end
 
 -- night
 
-local darkLayer = display.newImageRect(userInterface, "nightOverlay.png", 1536, 864)
+local darkLayer = display.newImageRect(darknessLayer, "nightOverlay.png", 1536, 864)
 darkLayer.x = display.contentCenterX
 darkLayer.y = display.contentCenterY
 darkLayer.alpha = 0
@@ -1026,10 +1027,20 @@ end
 
 -- ========== Loops ========== --
 -- ==== Main Loop ===== --
-
+darknessTracker = 0
 local function poggers()
 
-    darkLayer.alpha = darkLayer.alpha + 0.1
+    darknessTracker = darknessTracker + 1
+    if(darknessTracker >= 0) then
+        darkLayer.alpha = darkLayer.alpha + 0.1
+    else
+        darkLayer.alpha = darkLayer.alpha - 0.1
+    end
+
+    if (darknessTracker == 12) then
+        darknessTracker = -12
+    end
+    -- darkLayer.alpha = darkLayer.alpha + 0.1
 
     print(darkLayer.alpha)
 
