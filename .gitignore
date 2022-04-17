@@ -13,4 +13,4 @@
 # IntelliJ
 /out/
 *.iml
-.idea/*.xml
+.idea/
