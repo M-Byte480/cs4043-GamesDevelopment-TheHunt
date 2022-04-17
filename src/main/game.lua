@@ -116,31 +116,31 @@ local function backgroundGrass()
     -- tile 1 
 
     if topOne == 1 then
-      local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+      local a = display.newImageRect(backgroundLayer, "/resources/images/tileOne.png", 516, 432 )
       a.x = display.contentCenterX - 500
       a.y = display.contentCenterY - 175
     elseif topOne == 2 then
-        local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+        local b = display.newImageRect(backgroundLayer, "/resources/images/tileTwo.png", 516, 432 )
         b.x = display.contentCenterX - 500
         b.y = display.contentCenterY - 175
       
     elseif topOne == 3 then
-        local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+        local c = display.newImageRect(backgroundLayer, "/resources/images/tileThree.png", 516, 432 )
         c.x = display.contentCenterX - 500
         c.y = display.contentCenterY - 175
 
     elseif topOne == 4 then
-        local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+        local d = display.newImageRect(backgroundLayer, "/resources/images/tileFour.png", 516, 432 )
         d.x = display.contentCenterX - 500
         d.y = display.contentCenterY - 175
 
     elseif topOne == 5 then
-        local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+        local e = display.newImageRect(backgroundLayer, "/resources/images/tileFive.png", 516, 432 )
         e.x = display.contentCenterX - 500
         e.y = display.contentCenterY - 175
 
     elseif topOne == 6 then
-        local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+        local f = display.newImageRect(backgroundLayer, "/resources/images/tileSix.png", 516, 432 )
         f.x = display.contentCenterX - 500
         f.y = display.contentCenterY - 175
 
@@ -148,31 +148,31 @@ local function backgroundGrass()
 
     -- tile 2 ( ITS CENTERED )
     if topTwo == 1 then
-        local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+        local a = display.newImageRect(backgroundLayer, "/resources/images/tileOne.png", 516, 432 )
         a.x = display.contentCenterX 
         a.y = display.contentCenterY - 175
       elseif topTwo == 2 then
-          local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+          local b = display.newImageRect(backgroundLayer, "/resources/images/tileTwo.png", 516, 432 )
           b.x = display.contentCenterX 
           b.y = display.contentCenterY - 175
         
       elseif topTwo == 3 then
-          local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+          local c = display.newImageRect(backgroundLayer, "/resources/images/tileThree.png", 516, 432 )
           c.x = display.contentCenterX
           c.y = display.contentCenterY - 175
   
       elseif topTwo == 4 then
-          local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+          local d = display.newImageRect(backgroundLayer, "/resources/images/tileFour.png", 516, 432 )
           d.x = display.contentCenterX 
           d.y = display.contentCenterY - 175
   
       elseif topTwo == 5 then
-          local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+          local e = display.newImageRect(backgroundLayer, "/resources/images/tileFive.png", 516, 432 )
           e.x = display.contentCenterX 
           e.y = display.contentCenterY - 175
   
       elseif topTwo == 6 then
-          local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+          local f = display.newImageRect(backgroundLayer, "/resources/images/tileSix.png", 516, 432 )
           f.x = display.contentCenterX 
           f.y = display.contentCenterY - 175
   
@@ -181,31 +181,31 @@ local function backgroundGrass()
 
       -- tile 3 (INVERSE OF TILE 1)
       if topThree == 1 then
-        local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+        local a = display.newImageRect(backgroundLayer, "/resources/images/tileOne.png", 516, 432 )
         a.x = display.contentCenterX + 500
         a.y = display.contentCenterY - 175
       elseif topThree == 2 then
-          local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+          local b = display.newImageRect(backgroundLayer, "/resources/images/tileTwo.png", 516, 432 )
           b.x = display.contentCenterX + 500
           b.y = display.contentCenterY - 175
         
       elseif topThree == 3 then
-          local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+          local c = display.newImageRect(backgroundLayer, "/resources/images/tileThree.png", 516, 432 )
           c.x = display.contentCenterX + 500
           c.y = display.contentCenterY - 175
   
       elseif topThree == 4 then
-          local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+          local d = display.newImageRect(backgroundLayer, "/resources/images/tileFour.png", 516, 432 )
           d.x = display.contentCenterX + 500
           d.y = display.contentCenterY - 175
   
       elseif topThree == 5 then
-          local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+          local e = display.newImageRect(backgroundLayer, "/resources/images/tileFive.png", 516, 432 )
           e.x = display.contentCenterX + 500
           e.y = display.contentCenterY - 175
   
       elseif topThree == 6 then
-          local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+          local f = display.newImageRect(backgroundLayer, "/resources/images/tileSix.png", 516, 432 )
           f.x = display.contentCenterX + 500
           f.y = display.contentCenterY - 175
   
@@ -213,31 +213,31 @@ local function backgroundGrass()
 
       -- TILE 4 (INVERSE Y OF 1)
       if botOne == 1 then
-        local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+        local a = display.newImageRect(backgroundLayer, "/resources/images/tileOne.png", 516, 432 )
         a.x = display.contentCenterX - 500
         a.y = display.contentCenterY + 175
       elseif botOne == 2 then
-          local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+          local b = display.newImageRect(backgroundLayer, "/resources/images/tileTwo.png", 516, 432 )
           b.x = display.contentCenterX - 500
           b.y = display.contentCenterY + 175
         
       elseif botOne == 3 then
-          local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+          local c = display.newImageRect(backgroundLayer, "/resources/images/tileThree.png", 516, 432 )
           c.x = display.contentCenterX - 500
           c.y = display.contentCenterY + 175
   
       elseif botOne == 4 then
-          local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+          local d = display.newImageRect(backgroundLayer, "/resources/images/tileFour.png", 516, 432 )
           d.x = display.contentCenterX - 500
           d.y = display.contentCenterY + 175
   
       elseif botOne == 5 then
-          local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+          local e = display.newImageRect(backgroundLayer, "/resources/images/tileFive.png", 516, 432 )
           e.x = display.contentCenterX - 500
           e.y = display.contentCenterY + 175
   
       elseif botOne == 6 then
-          local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+          local f = display.newImageRect(backgroundLayer, "/resources/images/tileSix.png", 516, 432 )
           f.x = display.contentCenterX - 500
           f.y = display.contentCenterY + 175
   
@@ -245,31 +245,31 @@ local function backgroundGrass()
 
       -- tile 5 ( ITS CENTERED )
     if botTwo == 1 then
-        local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+        local a = display.newImageRect(backgroundLayer, "/resources/images/tileOne.png", 516, 432 )
         a.x = display.contentCenterX 
         a.y = display.contentCenterY + 175
       elseif botTwo == 2 then
-          local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+          local b = display.newImageRect(backgroundLayer, "/resources/images/tileTwo.png", 516, 432 )
           b.x = display.contentCenterX 
           b.y = display.contentCenterY + 175
         
       elseif botTwo == 3 then
-          local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+          local c = display.newImageRect(backgroundLayer, "/resources/images/tileThree.png", 516, 432 )
           c.x = display.contentCenterX
           c.y = display.contentCenterY + 175
   
       elseif botTwo == 4 then
-          local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+          local d = display.newImageRect(backgroundLayer, "/resources/images/tileFour.png", 516, 432 )
           d.x = display.contentCenterX 
           d.y = display.contentCenterY + 175
   
       elseif botTwo == 5 then
-          local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+          local e = display.newImageRect(backgroundLayer, "/resources/images/tileFive.png", 516, 432 )
           e.x = display.contentCenterX 
           e.y = display.contentCenterY + 175
   
       elseif botTwo == 6 then
-          local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+          local f = display.newImageRect(backgroundLayer, "/resources/images/tileSix.png", 516, 432 )
           f.x = display.contentCenterX 
           f.y = display.contentCenterY + 175
   
@@ -277,31 +277,31 @@ local function backgroundGrass()
 
       -- tile 6 (INVERSE OF TILE 3)
       if topThree == 1 then
-        local a = display.newImageRect(backgroundLayer, "tileOne.png", 516, 432 )
+        local a = display.newImageRect(backgroundLayer, "/resources/images/tileOne.png", 516, 432 )
         a.x = display.contentCenterX + 500
         a.y = display.contentCenterY + 175
       elseif topThree == 2 then
-          local b = display.newImageRect(backgroundLayer, "tileTwo.png", 516, 432 )
+          local b = display.newImageRect(backgroundLayer, "/resources/images/tileTwo.png", 516, 432 )
           b.x = display.contentCenterX + 500
           b.y = display.contentCenterY + 175
         
       elseif topThree == 3 then
-          local c = display.newImageRect(backgroundLayer, "tileThree.png", 516, 432 )
+          local c = display.newImageRect(backgroundLayer, "/resources/images/tileThree.png", 516, 432 )
           c.x = display.contentCenterX + 500
           c.y = display.contentCenterY + 175
   
       elseif topThree == 4 then
-          local d = display.newImageRect(backgroundLayer, "tileFour.png", 516, 432 )
+          local d = display.newImageRect(backgroundLayer, "/resources/images/tileFour.png", 516, 432 )
           d.x = display.contentCenterX + 500
           d.y = display.contentCenterY + 175
   
       elseif topThree == 5 then
-          local e = display.newImageRect(backgroundLayer, "tileFive.png", 516, 432 )
+          local e = display.newImageRect(backgroundLayer, "/resources/images/tileFive.png", 516, 432 )
           e.x = display.contentCenterX + 500
           e.y = display.contentCenterY + 175
   
       elseif topThree == 6 then
-          local f = display.newImageRect(backgroundLayer, "tileSix.png", 516, 432 )
+          local f = display.newImageRect(backgroundLayer, "/resources/images/tileSix.png", 516, 432 )
           f.x = display.contentCenterX + 500
           f.y = display.contentCenterY + 175
   
@@ -324,31 +324,31 @@ local function backgroundSnow()
     -- tile 1 
 
     if topOne == 1 then
-      local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+      local a = display.newImageRect(backgroundLayer, "/resources/images/snowOne.png", 516, 432 )
       a.x = display.contentCenterX - 500
       a.y = display.contentCenterY - 175
     elseif topOne == 2 then
-        local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+        local b = display.newImageRect(backgroundLayer, "/resources/images/snowTwo.png", 516, 432 )
         b.x = display.contentCenterX - 500
         b.y = display.contentCenterY - 175
       
     elseif topOne == 3 then
-        local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+        local c = display.newImageRect(backgroundLayer, "/resources/images/snowThree.png", 516, 432 )
         c.x = display.contentCenterX - 500
         c.y = display.contentCenterY - 175
 
     elseif topOne == 4 then
-        local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+        local d = display.newImageRect(backgroundLayer, "/resources/images/snowFour.png", 516, 432 )
         d.x = display.contentCenterX - 500
         d.y = display.contentCenterY - 175
 
     elseif topOne == 5 then
-        local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+        local e = display.newImageRect(backgroundLayer, "/resources/images/snowFive.png", 516, 432 )
         e.x = display.contentCenterX - 500
         e.y = display.contentCenterY - 175
 
     elseif topOne == 6 then
-        local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+        local f = display.newImageRect(backgroundLayer, "/resources/images/snowSix.png", 516, 432 )
         f.x = display.contentCenterX - 500
         f.y = display.contentCenterY - 175
 
@@ -356,31 +356,31 @@ local function backgroundSnow()
 
     -- tile 2 ( ITS CENTERED )
     if topTwo == 1 then
-        local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+        local a = display.newImageRect(backgroundLayer, "/resources/images/snowOne.png", 516, 432 )
         a.x = display.contentCenterX 
         a.y = display.contentCenterY - 175
       elseif topTwo == 2 then
-          local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+          local b = display.newImageRect(backgroundLayer, "/resources/images/snowTwo.png", 516, 432 )
           b.x = display.contentCenterX 
           b.y = display.contentCenterY - 175
         
       elseif topTwo == 3 then
-          local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+          local c = display.newImageRect(backgroundLayer, "/resources/images/snowThree.png", 516, 432 )
           c.x = display.contentCenterX
           c.y = display.contentCenterY - 175
   
       elseif topTwo == 4 then
-          local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+          local d = display.newImageRect(backgroundLayer, "/resources/images/snowFour.png", 516, 432 )
           d.x = display.contentCenterX 
           d.y = display.contentCenterY - 175
   
       elseif topTwo == 5 then
-          local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+          local e = display.newImageRect(backgroundLayer, "/resources/images/snowFive.png", 516, 432 )
           e.x = display.contentCenterX 
           e.y = display.contentCenterY - 175
   
       elseif topTwo == 6 then
-          local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+          local f = display.newImageRect(backgroundLayer, "/resources/images/snowSix.png", 516, 432 )
           f.x = display.contentCenterX 
           f.y = display.contentCenterY - 175
   
@@ -389,31 +389,31 @@ local function backgroundSnow()
 
       -- tile 3 (INVERSE OF TILE 1)
       if topThree == 1 then
-        local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+        local a = display.newImageRect(backgroundLayer, "/resources/images/snowOne.png", 516, 432 )
         a.x = display.contentCenterX + 500
         a.y = display.contentCenterY - 175
       elseif topThree == 2 then
-          local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+          local b = display.newImageRect(backgroundLayer, "/resources/images/snowTwo.png", 516, 432 )
           b.x = display.contentCenterX + 500
           b.y = display.contentCenterY - 175
         
       elseif topThree == 3 then
-          local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+          local c = display.newImageRect(backgroundLayer, "/resources/images/snowThree.png", 516, 432 )
           c.x = display.contentCenterX + 500
           c.y = display.contentCenterY - 175
   
       elseif topThree == 4 then
-          local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+          local d = display.newImageRect(backgroundLayer, "/resources/images/snowFour.png", 516, 432 )
           d.x = display.contentCenterX + 500
           d.y = display.contentCenterY - 175
   
       elseif topThree == 5 then
-          local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+          local e = display.newImageRect(backgroundLayer, "/resources/images/snowFive.png", 516, 432 )
           e.x = display.contentCenterX + 500
           e.y = display.contentCenterY - 175
   
       elseif topThree == 6 then
-          local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+          local f = display.newImageRect(backgroundLayer, "/resources/images/snowSix.png", 516, 432 )
           f.x = display.contentCenterX + 500
           f.y = display.contentCenterY - 175
   
@@ -421,31 +421,31 @@ local function backgroundSnow()
 
       -- TILE 4 (INVERSE Y OF 1)
       if botOne == 1 then
-        local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+        local a = display.newImageRect(backgroundLayer, "/resources/images/snowOne.png", 516, 432 )
         a.x = display.contentCenterX - 500
         a.y = display.contentCenterY + 175
       elseif botOne == 2 then
-          local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+          local b = display.newImageRect(backgroundLayer, "/resources/images/snowTwo.png", 516, 432 )
           b.x = display.contentCenterX - 500
           b.y = display.contentCenterY + 175
         
       elseif botOne == 3 then
-          local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+          local c = display.newImageRect(backgroundLayer, "/resources/images/snowThree.png", 516, 432 )
           c.x = display.contentCenterX - 500
           c.y = display.contentCenterY + 175
   
       elseif botOne == 4 then
-          local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+          local d = display.newImageRect(backgroundLayer, "/resources/images/snowFour.png", 516, 432 )
           d.x = display.contentCenterX - 500
           d.y = display.contentCenterY + 175
   
       elseif botOne == 5 then
-          local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+          local e = display.newImageRect(backgroundLayer, "/resources/images/snowFive.png", 516, 432 )
           e.x = display.contentCenterX - 500
           e.y = display.contentCenterY + 175
   
       elseif botOne == 6 then
-          local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+          local f = display.newImageRect(backgroundLayer, "/resources/images/snowSix.png", 516, 432 )
           f.x = display.contentCenterX - 500
           f.y = display.contentCenterY + 175
   
@@ -453,31 +453,31 @@ local function backgroundSnow()
 
       -- tile 5 ( ITS CENTERED )
     if botTwo == 1 then
-        local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+        local a = display.newImageRect(backgroundLayer, "/resources/images/snowOne.png", 516, 432 )
         a.x = display.contentCenterX 
         a.y = display.contentCenterY + 175
       elseif botTwo == 2 then
-          local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+          local b = display.newImageRect(backgroundLayer, "/resources/images/snowTwo.png", 516, 432 )
           b.x = display.contentCenterX 
           b.y = display.contentCenterY + 175
         
       elseif botTwo == 3 then
-          local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+          local c = display.newImageRect(backgroundLayer, "/resources/images/snowThree.png", 516, 432 )
           c.x = display.contentCenterX
           c.y = display.contentCenterY + 175
   
       elseif botTwo == 4 then
-          local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+          local d = display.newImageRect(backgroundLayer, "/resources/images/snowFour.png", 516, 432 )
           d.x = display.contentCenterX 
           d.y = display.contentCenterY + 175
   
       elseif botTwo == 5 then
-          local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+          local e = display.newImageRect(backgroundLayer, "/resources/images/snowFive.png", 516, 432 )
           e.x = display.contentCenterX 
           e.y = display.contentCenterY + 175
   
       elseif botTwo == 6 then
-          local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+          local f = display.newImageRect(backgroundLayer, "/resources/images/snowSix.png", 516, 432 )
           f.x = display.contentCenterX 
           f.y = display.contentCenterY + 175
   
@@ -485,31 +485,31 @@ local function backgroundSnow()
 
       -- tile 6 (INVERSE OF TILE 3)
       if topThree == 1 then
-        local a = display.newImageRect(backgroundLayer, "snowOne.png", 516, 432 )
+        local a = display.newImageRect(backgroundLayer, "/resources/images/snowOne.png", 516, 432 )
         a.x = display.contentCenterX + 500
         a.y = display.contentCenterY + 175
       elseif topThree == 2 then
-          local b = display.newImageRect(backgroundLayer, "snowTwo.png", 516, 432 )
+          local b = display.newImageRect(backgroundLayer, "/resources/images/snowTwo.png", 516, 432 )
           b.x = display.contentCenterX + 500
           b.y = display.contentCenterY + 175
         
       elseif topThree == 3 then
-          local c = display.newImageRect(backgroundLayer, "snowThree.png", 516, 432 )
+          local c = display.newImageRect(backgroundLayer, "/resources/images/snowThree.png", 516, 432 )
           c.x = display.contentCenterX + 500
           c.y = display.contentCenterY + 175
   
       elseif topThree == 4 then
-          local d = display.newImageRect(backgroundLayer, "snowFour.png", 516, 432 )
+          local d = display.newImageRect(backgroundLayer, "/resources/images/snowFour.png", 516, 432 )
           d.x = display.contentCenterX + 500
           d.y = display.contentCenterY + 175
   
       elseif topThree == 5 then
-          local e = display.newImageRect(backgroundLayer, "snowFive.png", 516, 432 )
+          local e = display.newImageRect(backgroundLayer, "/resources/images/snowFive.png", 516, 432 )
           e.x = display.contentCenterX + 500
           e.y = display.contentCenterY + 175
   
       elseif topThree == 6 then
-          local f = display.newImageRect(backgroundLayer, "snowSix.png", 516, 432 )
+          local f = display.newImageRect(backgroundLayer, "/resources/images/snowSix.png", 516, 432 )
           f.x = display.contentCenterX + 500
           f.y = display.contentCenterY + 175
   
@@ -532,7 +532,7 @@ end
 
 -- night
 
-local darkLayer = display.newImageRect(darknessLayer, "nightOverlay.png", 1536, 864)
+local darkLayer = display.newImageRect(darknessLayer, "/resources/images/nightOverlay.png", 1536, 864)
 darkLayer.x = display.contentCenterX
 darkLayer.y = display.contentCenterY
 darkLayer.alpha = 0
@@ -551,7 +551,7 @@ local sheetOptions =
     numFrames = 5
 }
 
-local sheet_bush = graphics.newImageSheet("bushSprite.png", sheetOptions )
+local sheet_bush = graphics.newImageSheet("/resources/images/bushSprite.png", sheetOptions )
 
 -- sequence table 
 local sequencesBush = {
@@ -596,12 +596,12 @@ physics.addBody( border, "static", { filter = borderCollisionFilter } )
 
 local function worldBorder()
 
-    local borderTree = display.newImageRect(mainLayer, "TREEBORDER.PNG", 134, 864)
+    local borderTree = display.newImageRect(mainLayer, "/resources/images/TREEBORDER.PNG", 134, 864)
 
     borderTree.x = display.contentCenterX - 750
     borderTree.y = display.contentCenterY
 
-    local borderTreeLEFT = display.newImageRect(mainLayer, "TREEBORDER.PNG", 134, 864)
+    local borderTreeLEFT = display.newImageRect(mainLayer, "/resources/images/TREEBORDER.PNG", 134, 864)
     borderTreeLEFT.x = display.contentCenterX + 750
     borderTreeLEFT.y = display.contentCenterY
     borderTreeLEFT:scale(-1, 1)
@@ -612,12 +612,12 @@ end
 
 local function worldBorderSnow()
 
-    local borderTree = display.newImageRect(mainLayer, "snowyBorder.png", 134, 864)
+    local borderTree = display.newImageRect(mainLayer, "/resources/images/snowyBorder.png", 134, 864)
 
     borderTree.x = display.contentCenterX - 750
     borderTree.y = display.contentCenterY
 
-    local borderTreeLEFT = display.newImageRect(mainLayer, "snowyBorder.png", 134, 864)
+    local borderTreeLEFT = display.newImageRect(mainLayer, "/resources/images/snowyBorder.png", 134, 864)
     borderTreeLEFT.x = display.contentCenterX + 750
     borderTreeLEFT.y = display.contentCenterY
     borderTreeLEFT:scale(-1, 1)
@@ -663,7 +663,7 @@ local function createNormalTrees()
     for i = 1, num, 1 do
         local treeSizeW = math.random(175,250)
         local treeSizeH = math.random(80,100)
-        local tree = display.newImageRect( treesLayer, "normalTree.png", treeSizeH, treeSizeW )
+        local tree = display.newImageRect( treesLayer, "/resources/images/normalTree.png", treeSizeH, treeSizeW )
         tree.x = math.random(50, display.contentWidth-50)
         tree.y = math.random(50, display.contentHeight-50)
         tree.myName = "tree"
@@ -677,7 +677,7 @@ local function createSnowyTrees()
     for i = 1, num, 1 do
         local treeSizeW = math.random(175,250)
         local treeSizeH = math.random(80,100)
-        local tree = display.newImageRect( treesLayer, "snowyTree1.png", treeSizeH, treeSizeW)
+        local tree = display.newImageRect( treesLayer, "/resources/images/snowyTree1.png", treeSizeH, treeSizeW)
         tree.x = math.random(50, display.contentWidth-50)
         tree.y = math.random(50, display.contentHeight-50)
         tree.myName = "tree"
@@ -693,7 +693,7 @@ local function createStones()
     corners = shuffle(corners)
     -- print(corners)
     for i = 1, num, 1 do
-        local boulder = display.newImageRect( backgroundLayer, "stone.png", 100, 100)
+        local boulder = display.newImageRect( backgroundLayer, "/resources/images/stone.png", 100, 100)
         -- physics.addBody(mainLayer, "static", boulder, { filter = boulderCollisionFilter , radius = 10} )
         local slightAlternation = math.random(0,25)
         local offset = 120 + slightAlternation
@@ -1149,7 +1149,7 @@ local function clock()
     clockF.y = display.contentCenterY - 250
     clockF.alpha = 1
     
-    local clockH = display.newImageRect(userInterface, "clockHand.png", 200, 200 )
+    local clockH = display.newImageRect(userInterface, "clockHand2.png", 200, 200 )
     clockH.x = display.contentCenterX 
     clockH.y = display.contentCenterY - 250
     
