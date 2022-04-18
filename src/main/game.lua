@@ -1055,14 +1055,14 @@ end
 
 local function maskLoop()                                                   -- ## THIS IS THE ONE YOU'RE LOOKING FOR
 
-local mask = graphics.newMask("maskLayer.png")
+local mask = graphics.newMask("/resources/images/maskLayer.png")
 darkLayer:setMask(mask)
 darkLayer.maskX , darkLayer.maskY = player.x - 750, player.y - 400
 end
 
 local function maskLoopArc()                                                   -- ## THIS IS THE ONE YOU'RE LOOKING FOR
 
-    local mask = graphics.newMask("maskLayerARC.png", 500, 500)
+    local mask = graphics.newMask("/resources/images/maskLayerARC.png", 500, 500)
     darkLayer:setMask(mask)
     darkLayer.maskX , darkLayer.maskY = player.x - 775, player.y - 425
     local x1, y1 = getPlayerPosition()

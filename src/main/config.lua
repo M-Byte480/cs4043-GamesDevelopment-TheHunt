@@ -11,7 +11,7 @@ application =
 		height = 1536 , 
 		scale = "zoomEven",
 		fps = 60,
-		
+
 		--[[
 		imageSuffix =
 		{
