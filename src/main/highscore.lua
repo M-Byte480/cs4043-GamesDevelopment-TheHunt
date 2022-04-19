@@ -1,5 +1,5 @@
 ------------------------ROGERS CODE---------------------------------------------
---------------------------------------------------------------------------------
+
 
 --Add this to game.lua to allow for a recorded highscore(dont have to include go to highscore scene)
 
@@ -10,22 +10,26 @@
 
 
 
-local composer = require("composer")
+local composer = require( "composer" )
 
 local scene = composer.newScene()
+local json = require( "json" )
 
 local scoresTable = {}
 
-local filePath = system.pathForFile("scores.json", system.DocumentsDirectory)
+local width = display.contentWidth
+local height = display.contentHeight
 
-local function loadscores()
+local filePath = system.pathForFile( "scores.json", system.DocumentsDirectory )
 
-  local file = io.open(filePath, "r")
+local function loadScores()
+
+  local file = io.open( filePath, "r" )
 
   if file then
-    local contents = file:read("*a")
-    io.close(file)
-    scoresTable = json.decode(contents)
+    local contents = file:read( "*a" )
+    io.close( file )
+    scoresTable = json.decode( contents )
   end
 
   if ( scoresTable == nil or #scoresTable == 0 ) then
@@ -35,20 +39,21 @@ end
 
 local function saveScores()
 
-  for i = #scoresTable, 11, -1 do
-    table.remove(scoresTable, i)
+  for i = #scoresTable, 7, -1 do
+    table.remove( scoresTable, i )
   end
 
-  local file = io.open(filePath, "w")
+  local file = io.open( filePath, "w" )
 
   if file then
-    file:write(json.encode( scoresTable))
-    io.close(file)
+    file:write( json.encode( scoresTable ) )
+    io.close( file )
   end
 end
 
 local function gotoMenu()
-  composer.gotoScene("menu", { time=800, effect="crossFade"})
+  composer.gotoScene( "menu", { time=800, effect="crossFade" } )
+end
 ----------------------------------------------------------------------------------------
 
 
@@ -62,47 +67,42 @@ function scene:create( event )
     loadScores()
 
 -- Insert the last games score
-    table.insert(scoresTable, composer.getVariable("killCount"))
-    composer.setVariable("killCount", 0)
-end
+    table.insert( scoresTable, composer.getVariable( "killCount" ) )
+    composer.setVariable( "killCount", 0 )
+
 
 -- Sort the scores in the table from highest to lowest
-    local function compare(a, b)
+    local function compare( a, b )
       return a > b
     end
-    table.sort(scoresTable, compare)
+    table.sort( scoresTable, compare )
 
       -- Saves scores
       saveScores()
 
-      local background = display.newImageRect( sceneGroup, "nightOverlay.png", 800, 1400)
+      local background = display.newImageRect( sceneGroup, "/resources/images/highscoreBackground.png", width, height )
       background.x = display.contentCenterX
       background.y = display.contentCenterY
 
-      local highScoresHeader = display.newText(sceneGroup, "High Scores", display.contentCenterX, 100, native.systemFontBold, 48 )
+      local highScoresHeader = display.newText( sceneGroup, "High Scores", display.contentCenterX, 115, native.systemFontBold, 65 )
 
-      for i = 1, 10 do
+      for i = 1, 6 do
         if ( scoresTable[i] ) then
             local yPos = 120 + ( i * 56 )
 
-            local rankNum = display.newText( sceneGroup, i .. ")", display.contentCenterX-50, yPos, native.systemFont, 36 )
+            local rankNum = display.newText(sceneGroup, i .. ")", display.contentCenterX, yPos, native.systemFont, 36 )
             rankNum:setFillColor( 0.8 )
             rankNum.anchorX = 1
 
-            local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX-30, yPos, native.systemFont, 36 )
+            local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX, yPos, native.systemFont, 36 )
             thisScore.anchorX = 0
-
         end
       end
 
-    local menuButton = display.newText( sceneGroup, "Back To Menu", displaycontentCenterX, 810, native.systemFontBold, 42)
-      menuButton:setFillColor( 0.75, 0.78, 1 )
-      menuButton:addEventListener( "tap", gotoMenu )
-
-  end
-
-
-
+    local menuButton = display.newText( sceneGroup, "Back To Menu", display.contentCenterX + 475, display.contentCenterY + 290, native.systemFontBold, 42)
+    menuButton:setFillColor( 0.75, 0.78, 1 )
+    menuButton:addEventListener( "tap", gotoMenu )
+end
 
 
 -- show()
@@ -132,7 +132,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
-        composer.removeScene("highscores")
+        composer.removeScene( "highscores" )
     end
 end
 
@@ -144,6 +144,7 @@ function scene:destroy( event )
     -- Code here runs prior to the removal of scene's view
 
 end
+
 
 -- -----------------------------------------------------------------------------------
 -- Scene event function listeners

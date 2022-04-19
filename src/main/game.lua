@@ -39,12 +39,17 @@ local kills = 0
 local seconds = 0
 local minutes = 0
 local health = 100
+local zombieHealth = 100
+local bulletDamage = 100
 
 -- IMPORTANT VARIABLES:
 zombieSpeed = 100
 local zombiesArray = {}
 globalBulletSpeed = 2500
 TimeDuration = 1000
+fireRate = 1200
+spawnRate = 1000
+zombieDamage = 3
 
 local character
 local gameLoopTimer
@@ -646,8 +651,7 @@ local function updateText()
     -- killCount.text = "Total kills: " .. kills
     healthText.text = "Health: " .. health .. "hp"
 
-    killCount.text = "Kills: " .. kills
-    -- scoreText.text = "Score: " .. score
+    killCount.text = "Total kills: " .. kills
 end
 
 -- ================== Functions =================== --
@@ -715,37 +719,37 @@ end
 
 
 -- Player Movement and Controls -- Italo
-local function onKeyEvent( event )
-    local pSpeed = 10 -- Speed of the player
+-- local function onKeyEvent( event )
+--     local pSpeed = 10 -- Speed of the player
 
-    -- If the "a" key was pressed, move the player left
-    if(event.keyName == "a") then
-        player.x = player.x - pSpeed
-    end
+--     -- If the "a" key was pressed, move the player left
+--     if(event.keyName == "a") then
+--         player.x = player.x - pSpeed
+--     end
 
-    -- If the "d" key was pressed, move the player right
-    if(event.keyName == "d") then
-        player.x = player.x + pSpeed
-    end
+--     -- If the "d" key was pressed, move the player right
+--     if(event.keyName == "d") then
+--         player.x = player.x + pSpeed
+--     end
 
-    -- If the "w" key was pressed, move the player up
-    if(event.keyName == "w") then
-        player.y = player.y - pSpeed
-    end
+--     -- If the "w" key was pressed, move the player up
+--     if(event.keyName == "w") then
+--         player.y = player.y - pSpeed
+--     end
 
-    -- If the "s" key was pressed, move the player down
-    if(event.keyName == "s") then
-        player.y = player.y + pSpeed
-    end
+--     -- If the "s" key was pressed, move the player down
+--     if(event.keyName == "s") then
+--         player.y = player.y + pSpeed
+--     end
 
-    if(event.keyName == "escape") then
-        -- If the "escape" key was pressed, go back to the main menu
-        composer.gotoScene( "main_menu" )
-    end
-end
+--     if(event.keyName == "escape") then
+--         -- If the "escape" key was pressed, go back to the main menu
+--         composer.gotoScene( "main_menu" )
+--     end
+-- end
  
--- Add the key event listener
-Runtime:addEventListener( "key", onKeyEvent )
+-- -- Add the key event listener
+-- Runtime:addEventListener( "key", onKeyEvent )
 
 -- ========== Zombie Spawner ========== --
 --[[
@@ -765,9 +769,12 @@ Runtime:addEventListener( "key", onKeyEvent )
     
 
 local function createZombie()
+    -- Zombie.png was from: https://opengameart.org/content/animated-top-down-zombie
+    -- Copyright to: Riley Gombart or ChessMasterRiley
     local newZombie = display.newImageRect( mainLayer, "/resources/images/zombie.png", 120, 120 )
     newZombie.alpha = 0.96
     newZombie.myName = "zombie"
+    newZombie.health = zombieHealth
     table.insert( zombiesArray, newZombie )
     physics.addBody( newZombie, "dynamic", { radius = 50, friction = 10 , filter = zombieCollisionFilter} )
     local whereFrom = math.random( 12 )
@@ -785,10 +792,14 @@ local function createZombie()
         newZombie.x = centerX - math.random( display.contentWidth )
         newZombie.y = -80
     end 
-
+    -- newZombie.x = centerX
+    -- newZombie.y = centerY
     -- === Helper function called === -- Probably my best creation -- Milan :)
     zombieAI(newZombie)
-    
+    -- local characterX, characterY = getPlayerPosition()
+    -- local angleRadians = getAngle(newZombie.x, newZombie.y, characterX,  characterY)
+    -- newZombie:rotate(angleRadians*180/math.pi)
+    -- newZombie.angle = angleRadians*180/math.pi
 end
 
 -- ====== Zombie AI to track the player ====== --
@@ -854,10 +865,10 @@ local A = false
 local D = false
 local W = false
 local S = false 
-
+playerSpeed = 500
 -- Player Movement and Controls -- Italo & Milan
 local function onKeyEvent( event )
-    local speed = 500 -- Speed of the player
+    local speed = playerSpeed -- Speed of the player
 
     -- If the "a" key was pressed, move the player left
     if(event.keyName == "a" and event.phase == "down" ) then
@@ -967,7 +978,16 @@ local function shoot()
 	transition.to( newBullet, { y = Y, x = X, time=transitionTime, onComplete = function() display.remove( newBullet ) end	} )
 end
 
-
+function pauseOnDeath()
+    for i = 1, #listOfTimers, 1 do
+        timer.pause(listOfTimers[i])
+    end
+    for i = 1, #zombiesArray, 1 do
+        zombiesArray[i]:setLinearVelocity( 0,0)
+        -- zombiesArray[i]:pause()
+    end
+    playerSpeed = 0
+end
 -- ============== MAIN FUNCTIONS ============== --
 
 local function onCollision( event )
@@ -988,43 +1008,56 @@ local function onCollision( event )
 		elseif ( ( obj1.myName == "character" and obj2.myName == "zombie" ) or
         ( obj1.myName == "zombie" and obj2.myName == "character" ) )
 		then
-			if ( died == false ) then
-				died = true
+            -- if (obj1.myName == "character") then
+            health = health - zombieDamage
+                -- if ( died == false ) then
+                    -- Update lives
+                -- health = health - zombieDamage
                 
-				-- Update lives
-				health = health - 1
-				healthText.text = "Health: " .. health
-                
-				if ( health == 0 ) then
-					display.remove( player )
-					timer.performWithDelay( 2000, endGame )
-				else
-					player.alpha = 0
-					timer.performWithDelay( 1000, restoreShip )
-				end
-			end
+
+                -- end
+            -- else
+                -- healt
+            -- end
+            if ( health <= 0 ) then
+                -- display.remove( player )
+                -- timer.performWithDelay( 2000, gotoHighscore )
+                pauseOnDeath()
+            end
             print("Player Hurt")
         -- ======== Zombie Vs Bullet ======== --
-        elseif ( ( obj1.myName == "bullet" and obj2.myName == "zombie" ) or
-        ( obj1.myName == "zombie" and obj2.myName == "bullet" ) ) then
-            display.remove( obj1 )
-            display.remove( obj2 )
-            print("CRASHED")
-            
-            for i = #zombiesArray, 1, -1 do
-                if ( zombiesArray[i] == obj1 or zombiesArray[i] == obj2 ) then
-                    table.remove( zombiesArray, i )
-                    break
+        elseif  ( obj1.myName == "bullet" and obj2.myName == "zombie" ) then
+            display.remove(obj1)
+            obj2.health = obj2.health - bulletDamage
+            if obj2.health <= 0 then
+                display.remove( obj2 )
+                for i = #zombiesArray, 1, -1 do
+                    if ( zombiesArray[i] == obj2 ) then
+                        table.remove( zombiesArray, i )
+                        break
+                    end
                 end
+                kills = kills + 1
             end
-            
-            -- Increase score
-            -- score = score + 100
-            -- scoreText.text = "Score: " .. score
+        
+        elseif ( obj1.myName == "zombie" and obj2.myName == "bullet" )  then
+            display.remove( obj2 )
+            obj1.health = obj1.health - bulletDamage
+            if obj1.health <= 0 then
+                display.remove( obj1 )
+                -- scoreText.text = "Score: " .. score
+                for i = #zombiesArray, 1, -1 do
+                    if ( zombiesArray[i] == obj1 ) then
+                        table.remove( zombiesArray, i )
+                        break
+                    end
+                end
+                kills = kills + 1
+            end
         end 
+        updateText()
     end
 end
-
 -- ========== Loops ========== --
 -- ==== Main Loop ===== --
 darknessTracker = 0
@@ -1069,7 +1102,7 @@ local function maskLoopArc()                                                   -
     local angle = getAngle(x1, y1, mouseX, mouseY)
 
     darkLayer.maskRotation = (angle*180/math.pi)
-    end
+end
 
 local function gameLoop()
 
@@ -1099,9 +1132,23 @@ local function gameLoop()
         -- Zombie AI
         local thisZombie = zombiesArray[i]
         zombieAI(thisZombie)
-
+        -- rotateZombie(thisZombie)
     end
 end
+--[[
+function rotateZombie(zombie)
+    local characterX, characterY = getPlayerPosition()
+    local angleRadian1 = getAngle(characterX, characterY, zombie.x,  zombie.y)
+    local angleDegree1 = angleRadian1 * 180 / math.pi
+    local angleRadian2 = getAngle(zombie.x, zombie.y, characterX, characterY)
+    local angleDegree2 = angleRadian2 * 180 / math.pi
+
+    -- zombie.angle = zombie.angle - angleRadians * 180/math.pi - 90
+    zombie:rotate(angleDegree2 - angleDegree1)
+    print(zombie.angle)
+end]]
+    
+
 -- =================== Main Methods Execution =================== --
 -- == Create a set of trees and stones == --
 
@@ -1155,21 +1202,63 @@ local function clock()
     
 end
 
--- clock()
+function progress()
+    --[[
+        Initial Values:
+        player Health = 100  hp              -- The only value you are not allowed to touch
+        player speed = 500 pixels per second -- The only value you are not allowed to touch
 
+        zombieHealth = 100   hp
+        zombieDamage = 3     dmg
+        bulletDamage = 100   dmg
+        zombieSpeed = 100    pixels per second
+        globalBulletSpeed = 2500 ms
+        fireRate = 1200         ms
+    ]]
+
+
+    if(kills <= 10) then
+        zombieHealth = 120 
+        zombieDamage = 3  
+        bulletDamage = 100
+        zombieSpeed = 150 
+        globalBulletSpeed = 2500 
+        fireRate = 1000 
+    elseif(kills <= 20) then
+        
+    elseif(kills <= 30) then
+    elseif(kills <= 40) then
+    elseif(kills <= 50) then
+    elseif(kills <= 60) then
+    elseif(kills <= 70) then
+    elseif(kills <= 80) then
+    elseif(kills <= 90) then
+    elseif(kills <= 100) then
+    elseif(kills <= 150) then
+    elseif(kills <= 170) then
+    elseif(kills <= 210) then 
+    elseif(kills <= 250) then 
+    elseif(kills <= 300) then  
+    elseif(kills <= 350) then   
+    end
+
+    print("Zombie: " .. zombieHealth .. "\nSpawn Rate: " .. spawnRate .. "\nFire Rate: " .. fireRate .. "\nBullet Damage: " .. bulletDamage .. "\nZombie Speed: " .. zombieSpeed)
+end
+-- clowck()
+-- createZombie()
 -- == Loops such as spawning and shooting == --
 gameLoopTimer = timer.performWithDelay( 250, gameLoop, 0 )
-summoning = timer.performWithDelay(1000, createZombie, 0)
+summoning = timer.performWithDelay(spawnRate, createZombie, 0)
 hourHandTimer = timer.performWithDelay(1000, moveHourHand , -1 )
-fireRate = timer.performWithDelay(750, shoot, 0) -- Auto shoot
+fireRateSpawner = timer.performWithDelay(fireRate, shoot, 0) -- Auto shoot
 -- maskLoopTimer = timer.performWithDelay(1, maskLoop, 0)     
 maskLoopTimer = timer.performWithDelay(1, maskLoopArc, 0)                                          
-
+progressionMap = timer.performWithDelay(10000, progress, 0) -- Every 10 seconds, we check what we need to update
 
 -- timer.performWithDelay(1, clockRotation, 0 )
 
 poggersLoop = timer.performWithDelay(2000, poggers, 0) -- Calling the night cycle function 
-
+listOfTimers = {gameLoopTimer, summoning, hourHandTimer, fireRateSpawner, maskLoopTimer, progressionMap, poggersLoop}
 
 -- fireRate = timer.performWithDelay(750, shoot, 0) -- Auto shoot
 -- AUTO SHOOT WILL BE BETTER THAN TAP AS TAP DOESNT ALWAYS REGISTER 

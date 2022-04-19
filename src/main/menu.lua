@@ -136,8 +136,12 @@ local function gotoGame()
 	composer.gotoScene( "game", { time=800, effect="crossFade" } )
 end
 
+local function gotoIntro()
+	composer.gotoScene("intro")
+end
+
 local function gotoHighScores()
-	composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
+	composer.gotoScene( "highscore", { time=800, effect="crossFade" } )
 end
 
 
@@ -154,37 +158,37 @@ function scene:create( event )
 	
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
-	local background = display.newImageRect( sceneGroup, "resources/images/TheHuntMenu-1.png", 1500, 800 )
+	local background = display.newImageRect( sceneGroup, "/resources/images/TheHuntMenu-1.png", 1500, 800 )
 	background.x = display.contentCenterX 
 	background.y = display.contentCenterY 
 	-- background:rotate(90)
 
 	
 
-	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, 700, "1_MinecraftRegular1.otf", 50 )
+	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, 700, "/resources/font/1_MinecraftRegular1.otf", 50 )
 	playButton:setFillColor( 0.82, 0.86, 1 )
 	playButton.x = display.contentCenterX 
 	playButton.y = display.contentCenterY - 70
 	-- playButton:rotate(90)
 
-	local multiplayerButton = display.newText( sceneGroup, "Multiplayer", display.contentCenterX, 545, "1_MinecraftRegular1.otf", 50 )
+	local multiplayerButton = display.newText( sceneGroup, "Multiplayer", display.contentCenterX, 545, "/resources/font/1_MinecraftRegular1.otf", 50 )
 	multiplayerButton.x = display.contentCenterX 
 	multiplayerButton.y = display.contentCenterY + 60
 	multiplayerButton:setFillColor( 0.82, 0.86, 1 )
 	-- multiplayerButton:rotate(90)
 
 
-	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, 810, "1_MinecraftRegular1.otf", 50 )
+	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, 810, "/resources/font/1_MinecraftRegular1.otf", 50 )
 	highScoresButton:setFillColor( 0.75, 0.78, 1 )
 	highScoresButton.x = display.contentCenterX
 	highScoresButton.y = display.contentCenterY + 185
 	-- highScoresButton:rotate(90)
 
-	playButton:addEventListener( "tap", gotoGame )
+	playButton:addEventListener( "tap", gotoIntro )
 	highScoresButton:addEventListener( "tap", gotoHighScores )
 
-	--mainMenuMusic = audio.loadSound("audio/MinecraftDrill - Copy.wav")
-	local playMenuMusic = audio.play( mainMenuMusic )
+	mainMenuMusic = audio.loadSound("/resources/audio/MinecraftDrill.wav")
+	-- local playMenuMusic = audio.play( mainMenuMusic )
 	
 end
 
