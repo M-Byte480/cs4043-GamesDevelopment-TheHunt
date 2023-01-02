@@ -1,44 +1,37 @@
------------------------------------------------------------------------------------------
---
--- main.lua
---
------------------------------------------------------------------------------------------
-
+-- The structure of the game was taken from the tutorial
 -- https://docs.coronalabs.com/guide/programming/01/index.html
--- Modified contents: Milan
+-- https://docs.coronalabs.com/guide/programming/02/index.html
+-- Minecraft Font: https://www.cufonfonts.com/font/minecraft-3 
+composer = require( "composer" )
+ 
+local scene = composer.newScene()
 
+function scene:create( event )
+ 
+local sceneGroup = self.view
 -- =========== Initalizing Section =========== --
 -- We will only need physics for the collision detection
 local physics = require( "physics" )
 physics.start()
-physics.setGravity( 0, 0 ) -- We wont need gravity
+physics.setGravity( 0, 0 ) -- We wont need gravity since its top down
 
 display.setStatusBar( display.HiddenStatusBar )
 
-math.randomseed( os.time() ) -- Random seed from the number generator
 
---[[
-
-    The following code format was taken from: 
-    https://docs.coronalabs.com/guide/programming/02/index.html
-
-]]
+-- Collision filter Documentation:
+-- https://docs.coronalabs.com/plugin/collisionFilters/index.html
 -- =============== Collision filters =============== --
-local playerCollisionFilter = { categoryBits=1, maskBits=22 }  
-local zombieCollisionFilter = { categoryBits=2, maskBits=11 }    
+local playerCollisionFilter = { categoryBits=1, maskBits=6 }  
+local zombieCollisionFilter = { categoryBits=2, maskBits=3 }    
 local borderCollisionFilter = { categoryBits=4, maskBits=1 } 
-local bulletCollisionFilter = { categoryBits=8, maskBits=18 }
-local boulderCollisionFilter = { categoryBits=16, maskBits=13 }
+
 
 
 -- =========== Global/local Variables =========== --
 -- We will initliaze the variables to be used in the game -- Milan
 local dead = false
-local score = 0
 local kills = 0
-local seconds = 0
-local minutes = 0
-local health = 100
+local health = 1
 local zombieHealth = 100
 local bulletDamage = 100
 
@@ -73,42 +66,45 @@ centerY = display.contentCenterY
 
 -- =================== Layers =================== --
 -- We will create 4 layers for display -- Milan
-local backgroundLayer = display.newGroup()
-local mainLayer = display.newGroup()
-local treesLayer = display.newGroup()
-local darknessLayer = display.newGroup()
-local userInterface = display.newGroup()
-
+backgroundLayer = display.newGroup()
+mainLayer = display.newGroup()
+treesLayer = display.newGroup()
+darknessLayer = display.newGroup()
+userInterface = display.newGroup()
+deathScreenInterface = display.newGroup()
 -- =================== Background and player Spawning =================== --
--- We will create image objects and insert them into their corresponding groups ~ Milan
--- local background = display.newImageRect( backgroundLayer, "/resources/images/background.png", display.contentWidth, display.contentHeight )
-local player = display.newImageRect( mainLayer, "/resources/images/character.png", 100, 100 )
+-- We will create image objects and insert them into their corresponding groups -- Milan
 
-local inventoryBox1 = display.newImageRect( userInterface, "/resources/images/InventoryIcon.png" , 75, 75)
+-- The HUD was made by Stephen:
+player = display.newImageRect( mainLayer, "/resources/images/character.png", 100, 100 )
+
+inventoryBox1 = display.newImageRect( userInterface, "/resources/images/InventoryIcon.png" , 75, 75)
 inventoryBox1.x = display.contentCenterX - 600
 inventoryBox1.y = display.contentCenterY + 300
 
-local inventoryBox2 = display.newImageRect( userInterface, "/resources/images/InventoryIcon.png", 75, 75)
+inventoryBox2 = display.newImageRect( userInterface, "/resources/images/InventoryIcon.png", 75, 75)
 inventoryBox2.x = display.contentCenterX - 700
 inventoryBox2.y = display.contentCenterY + 300
 
-local crossbowImg = display.newImageRect( userInterface, "/resources/images/crossbow.png", 40, 40)
+crossbowImg = display.newImageRect( userInterface, "/resources/images/crossbow.png", 40, 40)
 crossbowImg.x = display.contentCenterX - 700
 crossbowImg.y = display.contentCenterY +300
 
-local torchImg = display.newImageRect( userInterface, "/resources/images/torch.png", 50, 50)
+torchImg = display.newImageRect( userInterface, "/resources/images/torch.png", 50, 50)
 torchImg.x = display.contentCenterX - 600
 torchImg.y = display.contentCenterY + 300
 
-local basicClock = display.newImageRect( userInterface, "/resources/images/clock.png", 150, 150)
+basicClock = display.newImageRect( userInterface, "/resources/images/clock.png", 150, 150)
 basicClock.x = display.contentCenterX 
 basicClock.y = display.contentCenterY -270
 
-local clockhand = display.newImageRect(userInterface, "/resources/images/clockhand.png" , 80,60)
+clockhand = display.newImageRect(userInterface, "/resources/images/clockhand.png" , 80,60)
 clockhand.x = display.contentCenterX
 clockhand.y = display.contentCenterY -295
--- NEW BACKGROUND GENERATION 
 
+
+-- NEW BACKGROUND GENERATION 
+-- Background generation was created by Marty:
 local function backgroundGrass()
 
     local topOne = math.random(6)
@@ -316,7 +312,7 @@ local function backgroundGrass()
 
 end
 
-
+-- Snowy background -- Marty
 local function backgroundSnow()
 
     local topOne = math.random(6)
@@ -528,27 +524,16 @@ end
 
 
 
--- We will display them in the correct position -- Milan
--- background.x = display.contentCenterX
--- background.y = display.contentCenterY
--- background.x = display.contentCenterX
--- background.y = display.contentCenterY
 
-
--- night
+-- night effect -- Marty
 
 local darkLayer = display.newImageRect(darknessLayer, "/resources/images/nightOverlay.png", 1536, 864)
 darkLayer.x = display.contentCenterX
 darkLayer.y = display.contentCenterY
 darkLayer.alpha = 0
 
---timer.performWithDelay(3000, nightCycle)
 
-
-
-
-
--- SPRITE FOR BUSH SPAWNING
+-- SPRITE FOR BUSH SPAWNING -- Marty
 local sheetOptions =
 {
     width = 88,
@@ -572,7 +557,7 @@ local sequencesBush = {
 }
 
 
--- ===== Bush Spawner ===== --
+-- ===== Bush Spawner ===== -- Marty
 local bush = display.newSprite(backgroundLayer ,sheet_bush, sequencesBush, bushSizeH, bushSizeW)
     local num = math.random(2,10)
     for i = 1, num, 1 do
@@ -584,22 +569,21 @@ local bush = display.newSprite(backgroundLayer ,sheet_bush, sequencesBush, bushS
     end
 bush:play()
 
--- === Player === --
+-- === Player === -- Milan
 player.x = display.contentCenterX
 player.y = display.contentCenterY
-player.alpha = 0.96         -- Slight transparency gives a nice effect and the player will intake more detail -- Milan
+player.alpha = 0.96     -- Slight transparency gives a nice effect 
 physics.addBody( player, { radius = 50, filter= playerCollisionFilter } )
 player.myName = "character"   
 
--- =================== WORLD BORDER =================== --
--- local border = display.newLine(mainLayer, 15, 15, 15, display.contentHeight - 15, display.contentWidth - 15, display.contentHeight - 15, display.contentWidth + 15, 0, 0, 0)
+-- =================== WORLD BORDER =================== -- Milan + Marty
 local border = display.newLine(mainLayer, -5, 75, width+10, 75, width+10, height - 75,   -5, height - 75, -5, 75)
 border:setStrokeColor(1, 0, 0, 1)
 border.strokeWidth = 8
 border.myName = "border"
 physics.addBody( border, "static", { filter = borderCollisionFilter } )
 
-local function worldBorder()
+local function worldBorder() -- Art done by Marty
 
     local borderTree = display.newImageRect(mainLayer, "/resources/images/TREEBORDER.PNG", 134, 864)
 
@@ -611,11 +595,9 @@ local function worldBorder()
     borderTreeLEFT.y = display.contentCenterY
     borderTreeLEFT:scale(-1, 1)
     
-
-
 end
 
-local function worldBorderSnow()
+local function worldBorderSnow() -- Art done by Marty
 
     local borderTree = display.newImageRect(mainLayer, "/resources/images/snowyBorder.png", 134, 864)
 
@@ -635,33 +617,27 @@ end
 local horizontalText = 600
 local verticalText = 120
 
+-- This section was done by Stephen:
 killCount = display.newText( userInterface , "Total kills: " .. kills, display.contentCenterX + horizontalText, verticalText + 10 , native.systemFont, 35 )
-killCount:setFillColor( 0 , 0, 0 , 0.9 )
-
--- scoreText = display.newText( userInterface , "Points: " .. score, display.contentCenterX + horizontalText + 20, verticalText , native.systemFont, 40 )
--- scoreText:setFillColor( 255 , 0 , 0 , 0.9 ) -- Note to self, Syntax is the following: R,G,B,Alpha -- Milan
+r, g, b, o =  0.8, 0.45, 0, 0.9
+killCount:setFillColor( r, g, b, o )
 
 healthText = display.newText( userInterface, "Health: " .. health .. "hp", display.contentCenterX - horizontalText, verticalText + 10, native.systemFont, 35)
-healthText:setFillColor( 0 , 0, 0 , 0.9 )
-
--- killCount = display.newText( userInterface , "Kills: " .. kills, display.contentCenterX + horizontalText, verticalText + 40 , native.systemFont, 40 )
--- killCount:setFillColor( 255 , 0 , 0 , 0.9 )
+healthText:setFillColor( r, g, b, o )
 
 local function updateText()
-    -- killCount.text = "Total kills: " .. kills
     healthText.text = "Health: " .. health .. "hp"
-
     killCount.text = "Total kills: " .. kills
 end
 
 -- ================== Functions =================== --
--- We will start creating our Methods / Functions -- Milan
+-- We will start creating our mathematical Methods / Functions -- Milan
 --[[
     This snippet of code was taken from: 
     https://docs.coronalabs.com/guide/programming/02/index.html
 ]]--
 
--- ===== Tree Spawner ===== --
+-- ===== Tree Spawner ===== -- Marty
 local function createNormalTrees()
     local num = math.random(2,5)
     for i = 1, num, 1 do
@@ -689,89 +665,13 @@ local function createSnowyTrees()
         
     end
 end
--- ==== Stop Spawner ==== --
-local function createStones()
-    -- I want the stones to spawn in the corners, so we will use an array and correlate the values with the corners -- Milan
-    local num = math.random(0, 2)
-    local corners = {1,2,3,4}
-    corners = shuffle(corners)
-    -- print(corners)
-    for i = 1, num, 1 do
-        local boulder = display.newImageRect( backgroundLayer, "/resources/images/stone.png", 100, 100)
-        -- physics.addBody(mainLayer, "static", boulder, { filter = boulderCollisionFilter , radius = 10} )
-        local slightAlternation = math.random(0,25)
-        local offset = 120 + slightAlternation
-        if corners[i] == 1 then
-            boulder.x = offset
-            boulder.y = offset
-        elseif corners[i] == 2 then
-            boulder.x = display.contentWidth - offset 
-            boulder.y = offset
-        elseif corners[i] == 3 then
-            boulder.x = offset 
-            boulder.y = display.contentHeight - offset
-        elseif corners[i] == 4 then
-            boulder.x = display.contentWidth - offset
-            boulder.y = display.contentHeight - offset
-        end
-    end
-end
 
 
--- Player Movement and Controls -- Italo
--- local function onKeyEvent( event )
---     local pSpeed = 10 -- Speed of the player
-
---     -- If the "a" key was pressed, move the player left
---     if(event.keyName == "a") then
---         player.x = player.x - pSpeed
---     end
-
---     -- If the "d" key was pressed, move the player right
---     if(event.keyName == "d") then
---         player.x = player.x + pSpeed
---     end
-
---     -- If the "w" key was pressed, move the player up
---     if(event.keyName == "w") then
---         player.y = player.y - pSpeed
---     end
-
---     -- If the "s" key was pressed, move the player down
---     if(event.keyName == "s") then
---         player.y = player.y + pSpeed
---     end
-
---     if(event.keyName == "escape") then
---         -- If the "escape" key was pressed, go back to the main menu
---         composer.gotoScene( "main_menu" )
---     end
--- end
- 
--- -- Add the key event listener
--- Runtime:addEventListener( "key", onKeyEvent )
-
--- ========== Zombie Spawner ========== --
---[[
-    Height; 1536
-    -------------------------------------------------
-    |   1   |   2  |    3   |      
-    ------- 0,0                            -------
-    | 4 |          (Screen)                | 10 |
-    | 5 |          Spawning                | 11 |       Width: 864
-    | 6 |         Explained                | 12 |
-    ------                     1536, 864  ---------
-    |   7   |   8   |   9   | 
-    ------------------------------------------------
-    ~~ Milan: the numbers no longer relate to sections of the screen as I am using the whole screen for random spawn area
-    ]]--
-    
-    
+-- ========== Zombie Spawner ========== -- By Milan
 
 local function createZombie()
-    -- Zombie.png was from: https://opengameart.org/content/animated-top-down-zombie
-    -- Copyright to: Riley Gombart or ChessMasterRiley
-    local newZombie = display.newImageRect( mainLayer, "/resources/images/zombie.png", 120, 120 )
+    -- Similar setup as player
+    local newZombie = display.newImageRect( mainLayer, "/resources/images/zombie.png", 100, 100 )
     newZombie.alpha = 0.96
     newZombie.myName = "zombie"
     newZombie.health = zombieHealth
@@ -792,36 +692,24 @@ local function createZombie()
         newZombie.x = centerX - math.random( display.contentWidth )
         newZombie.y = -80
     end 
-    -- newZombie.x = centerX
-    -- newZombie.y = centerY
-    -- === Helper function called === -- Probably my best creation -- Milan :)
+
+    -- === Helper function called === -- Probably my best creation -- Milan :D
     zombieAI(newZombie)
-    -- local characterX, characterY = getPlayerPosition()
-    -- local angleRadians = getAngle(newZombie.x, newZombie.y, characterX,  characterY)
-    -- newZombie:rotate(angleRadians*180/math.pi)
-    -- newZombie.angle = angleRadians*180/math.pi
+
 end
 
 -- ====== Zombie AI to track the player ====== --
 function zombieAI(object)
+    -- Uses Unit circle to calculate the angle between the player and the zombie
+    -- And then adjust the velocity (Speed and direction) of the zombie
     local characterX, characterY = getPlayerPosition()
     local angleRadians = getAngle(object.x, object.y, characterX, characterY)
     object:setLinearVelocity( math.cos(angleRadians) * zombieSpeed, math.sin(angleRadians) * zombieSpeed )
 end
 
--- ============ Helper Functions ============ --
--- === Shuffle Array === --
-function shuffle(tbl)
-    -- Fisher-Yates Shuffle: https://programming-idioms.org/idiom/10/shuffle-a-list/1313/lua
-    for i = #tbl, 2, -1 do
-		local j = math.random(i)
-		tbl[i], tbl[j] = tbl[j], tbl[i]
-	end
-    return tbl
-end
+-- ============ Helper Functions ============ -- By Milan
 
-
-
+-- Returns player's x and y position
 function getPlayerPosition()
     if ( dead == false ) then
         return player.x, player.y
@@ -831,8 +719,8 @@ end
 -- THE FOLLOWING WAS TAKEN FROM: https://fr.solar2d.net/api/event/mouse/x.html
 mouseX = 0
 mouseY = 0
--- Called when a mouse event has been received.
 
+-- Returns mouse's x and y position
 local function onMouseEvent( event )
     mouseX = event.x
     mouseY = event.y
@@ -841,7 +729,6 @@ end
 -- ===== Returns angle between 2 points, towards the positive/negative side of the x-axis in radians ===== --
 function getAngle(x1, y1, x2, y2)
     local angle = math.atan2(y2 - y1, x2 - x1)
-    -- print("The angle is; " .. angle*180/math.pi)
     return angle
 end
 
@@ -857,99 +744,74 @@ function translateOrigin(x1, y1, angle, radius)
     return x2, y2
 end
 
--- ================ Player Control =================== --
+-- ================ Player Control =================== -- By Italo
 
 local xAxis = 0
 local yAxis = 0
-local A = false
-local D = false
-local W = false
-local S = false 
+
 playerSpeed = 500
--- Player Movement and Controls -- Italo & Milan
+-- Player Movement and Controls -- 
 local function onKeyEvent( event )
     local speed = playerSpeed -- Speed of the player
 
-    -- If the "a" key was pressed, move the player left
     if(event.keyName == "a" and event.phase == "down" ) then
         xAxis = xAxis + speed * -1
-        A = true
     end
     
     if(event.keyName == "a" and event.phase == "up") then
         xAxis = xAxis + speed 
-        A = false
     end
     
     if(event.keyName == "s" and event.phase == "down"  ) then
         yAxis = yAxis + speed
-        S = true
     end
     if(event.keyName == "s" and event.phase == "up"  ) then
         yAxis = yAxis + speed * -1
-        S = false
     end    
     if(event.keyName == "w" and event.phase == "down"  ) then
         yAxis = yAxis + speed * -1
-        W = true
     end
 
     if(event.keyName == "w" and event.phase == "up"  ) then
         yAxis = yAxis + speed
-        W = false
     end
 
     if(event.keyName == "d" and event.phase == "down" ) then
         xAxis = xAxis + speed 
-        D = true
     end
 
     if(event.keyName == "d" and event.phase == "up" ) then
         xAxis = xAxis + speed * -1
-        D = false
     end
 
     player:setLinearVelocity( xAxis, yAxis )
 
-    if(event.keyName == "escape") then
-        -- If the "escape" key was pressed, go back to the main menu
-        composer.gotoScene( "main_menu" )
-    end
+
     return true
 end
 
 -- =========== Clock movement =========== --
-local clockhand = display.newImageRect(userInterface,"/resources/images/clockhand.png", 80 , 60)
-local n = 0
+local clockhand = display.newImageRect(userInterface,"/resources/images/clockhand2.png", 80 , 60)
 local angle = 30
 local centerOfClockX = basicClock.x
 local centerOfClockY = basicClock.y
 
 local function moveHourHand()
 
-    -- local X1, Y1 = moveHandle()
     clockhand:rotate(angle)
-    -- clockhand.x = X1
-    -- clockhand.y = Y1
     clockhand.x = centerOfClockX
     clockhand.y = centerOfClockY
-    -- return moveHourHand
     
 end
---[[
-function moveHandle()
-    local clockhandHalf = clockhand.height / 2
-    local x1, y1 = translateOrigin(centerOfClockX, centerOfClockY, clockhand.x, clockhand.y, 30, clockhandHalf)
-    
-end]]
--- =========== Shoot Function =========== --
+
+-- =========== Shoot Function =========== -- By Milan
 local function shoot()
     transitionTime = globalBulletSpeed
     
-	local newBullet = display.newImageRect( mainLayer, "resources/images/bullet.png", 50, 50 )
+	local newBullet = display.newImageRect( mainLayer, "resources/images/bullet.png", 25, 65 )
     local x1, y1 = getPlayerPosition()
     local angle = getAngle(x1, y1, mouseX, mouseY)
-    newBullet:rotate(angle*180/math.pi)
+    newBullet:rotate(angle*180/math.pi + 90)
 	physics.addBody( newBullet, "dynamic", { isSensor=true } )
 	newBullet.isBullet = true
 	newBullet.myName = "bullet"
@@ -966,7 +828,8 @@ local function shoot()
     -- distance = 800
     local distance = math.sqrt( (X - playerx)^2 + (Y - playery)^2 )
     
-    --[[ Extend the bullet
+    --[[ 
+    Extend the bullet
     We will need to translate the player's and the mouses's coordinates to origin
     ]]
     
@@ -978,53 +841,39 @@ local function shoot()
 	transition.to( newBullet, { y = Y, x = X, time=transitionTime, onComplete = function() display.remove( newBullet ) end	} )
 end
 
+-- Pause the game upon death -- By Milan
 function pauseOnDeath()
     for i = 1, #listOfTimers, 1 do
-        timer.pause(listOfTimers[i])
+        timer.pause(listOfTimers[i]) -- Pause all timers
     end
     for i = 1, #zombiesArray, 1 do
-        zombiesArray[i]:setLinearVelocity( 0,0)
-        -- zombiesArray[i]:pause()
+        zombiesArray[i]:setLinearVelocity( 0,0) -- Pause all zombies
     end
+
     playerSpeed = 0
 end
--- ============== MAIN FUNCTIONS ============== --
 
+-- ============== MAIN FUNCTIONS ============== --
+-- https://docs.coronalabs.com/guide/programming/03/index.html
 local function onCollision( event )
-    
 	if ( event.phase == "began" ) then
         
 		local obj1 = event.object1
 		local obj2 = event.object2
         
-        -- ======== Border Vs Character ======== --
-		if ( ( obj1.myName == "border" and obj2.myName == "character" ) or
-        ( obj1.myName == "character" and obj2.myName == "border" ) )
-		then
-			-- Remove both the laser and asteroid
-            print("BORDER")
             
         -- ======== Character Vs Zombie ======== --
-		elseif ( ( obj1.myName == "character" and obj2.myName == "zombie" ) or
+		if ( ( obj1.myName == "character" and obj2.myName == "zombie" ) or
         ( obj1.myName == "zombie" and obj2.myName == "character" ) )
 		then
-            -- if (obj1.myName == "character") then
             health = health - zombieDamage
-                -- if ( died == false ) then
-                    -- Update lives
-                -- health = health - zombieDamage
-                
-
-                -- end
-            -- else
-                -- healt
-            -- end
             if ( health <= 0 ) then
-                -- display.remove( player )
-                -- timer.performWithDelay( 2000, gotoHighscore )
                 pauseOnDeath()
+                
+                composer.gotoScene("retry", { time=800, effect="crossFade" })
             end
             print("Player Hurt")
+
         -- ======== Zombie Vs Bullet ======== --
         elseif  ( obj1.myName == "bullet" and obj2.myName == "zombie" ) then
             display.remove(obj1)
@@ -1045,7 +894,6 @@ local function onCollision( event )
             obj1.health = obj1.health - bulletDamage
             if obj1.health <= 0 then
                 display.remove( obj1 )
-                -- scoreText.text = "Score: " .. score
                 for i = #zombiesArray, 1, -1 do
                     if ( zombiesArray[i] == obj1 ) then
                         table.remove( zombiesArray, i )
@@ -1058,8 +906,12 @@ local function onCollision( event )
         updateText()
     end
 end
--- ========== Loops ========== --
+
+
+
+
 -- ==== Main Loop ===== --
+-- Darkness by Marty
 darknessTracker = 0
 local function poggers()
 
@@ -1073,24 +925,12 @@ local function poggers()
     if (darknessTracker == 12) then
         darknessTracker = -12
     end
-    -- darkLayer.alpha = darkLayer.alpha + 0.1
-
-    print(darkLayer.alpha)
-
 
 end
 
 while darkLayer.alpha < 0.2 and darkLayer.alpha > 0.10 do
     clockH:rotate(15)
     
-end
-
-
-local function maskLoop()                                                   -- ## THIS IS THE ONE YOU'RE LOOKING FOR
-
-local mask = graphics.newMask("/resources/images/maskLayer.png")
-darkLayer:setMask(mask)
-darkLayer.maskX , darkLayer.maskY = player.x - 750, player.y - 400
 end
 
 local function maskLoopArc()                                                   -- ## THIS IS THE ONE YOU'RE LOOKING FOR
@@ -1104,61 +944,18 @@ local function maskLoopArc()                                                   -
     darkLayer.maskRotation = (angle*180/math.pi)
 end
 
-local function gameLoop()
-
-       --function playerLight(getPlayerPosition)
-
-    --local mask = graphics.newMask("maskLayer.png")
-    --darkLayer:setMask(mask)
-    --darkLayer.maskX , darkLayer.maskY = player.x - 750, player.y - 400
-    --end
-    -- print("PRINT")
-
-    
-    -- Remove asteroids which have drifted off screen
-    for i = #zombiesArray, 1, -1 do
-        local thisZombie = zombiesArray[i]
-
-        if ( thisZombie.x < -100 or
-            thisZombie.x > display.contentWidth + 100 or
-            thisZombie.y < -100 or
-            thisZombie.y > display.contentHeight + 100 )
-        then
-            display.remove( thisZombie )
-            table.remove( zombiesArray, i )
-        end
-    end
+local function gameLoop() -- Milan
+    -- Update zombies tracking the player
     for i = #zombiesArray, 1 , -1 do
         -- Zombie AI
         local thisZombie = zombiesArray[i]
         zombieAI(thisZombie)
-        -- rotateZombie(thisZombie)
     end
 end
---[[
-function rotateZombie(zombie)
-    local characterX, characterY = getPlayerPosition()
-    local angleRadian1 = getAngle(characterX, characterY, zombie.x,  zombie.y)
-    local angleDegree1 = angleRadian1 * 180 / math.pi
-    local angleRadian2 = getAngle(zombie.x, zombie.y, characterX, characterY)
-    local angleDegree2 = angleRadian2 * 180 / math.pi
-
-    -- zombie.angle = zombie.angle - angleRadians * 180/math.pi - 90
-    zombie:rotate(angleDegree2 - angleDegree1)
-    print(zombie.angle)
-end]]
     
 
 -- =================== Main Methods Execution =================== --
 -- == Create a set of trees and stones == --
-
-
-
--- createTrees()
-createStones()
--- clock()
---createBush()
---playerLight()
 worldBorder()
 
 
@@ -1207,7 +1004,8 @@ function progress()
         Initial Values:
         player Health = 100  hp              -- The only value you are not allowed to touch
         player speed = 500 pixels per second -- The only value you are not allowed to touch
-
+        
+        spawnRate = 1000  milliseconds
         zombieHealth = 100   hp
         zombieDamage = 3     dmg
         bulletDamage = 100   dmg
@@ -1218,20 +1016,31 @@ function progress()
 
 
     if(kills <= 10) then
-        zombieHealth = 120 
-        zombieDamage = 3  
-        bulletDamage = 100
-        zombieSpeed = 150 
+        zombieDamage = 1  
+        -- Just the default
+    elseif(kills <= 20) then -- After twenty kills:
+        zombieHealth = 120
+        bulletDamage = 120
+        zombieSpeed = 100 
         globalBulletSpeed = 2500 
-        fireRate = 1000 
-    elseif(kills <= 20) then
-        
-    elseif(kills <= 30) then
-    elseif(kills <= 40) then
-    elseif(kills <= 50) then
-    elseif(kills <= 60) then
-    elseif(kills <= 70) then
+        fireRate = fireRate - 200 -- 1000 ms 
+    elseif(kills <= 30) then -- After thirty kills:
+        zombieHealth = 150
+        zombieSpeed = 70
+        zombieDamage = 4 -- damage increased by 2
+    elseif(kills <= 40) then -- After forty kills:
+        spawnRate = spawnRate + 300 -- 1300 ms
+        bulletDamage = zombieHealth
+        fireRate = fireRate - 250 -- 750 ms
+    elseif(kills <= 50) then -- After fifty kills:
+        zombieHealth = 250
+    elseif(kills <= 60) then -- After sixty kills:
+        bulletDamage = 150
+    elseif(kills <= 70) then -- After seventy kills:
+        zombieHealth = 300
     elseif(kills <= 80) then
+        fireRate = fireRate - 100 -- 750 
+        zombieSpeed = 110
     elseif(kills <= 90) then
     elseif(kills <= 100) then
     elseif(kills <= 150) then
@@ -1244,54 +1053,33 @@ function progress()
 
     print("Zombie: " .. zombieHealth .. "\nSpawn Rate: " .. spawnRate .. "\nFire Rate: " .. fireRate .. "\nBullet Damage: " .. bulletDamage .. "\nZombie Speed: " .. zombieSpeed)
 end
--- clowck()
--- createZombie()
+
 -- == Loops such as spawning and shooting == --
 gameLoopTimer = timer.performWithDelay( 250, gameLoop, 0 )
 summoning = timer.performWithDelay(spawnRate, createZombie, 0)
 hourHandTimer = timer.performWithDelay(1000, moveHourHand , -1 )
 fireRateSpawner = timer.performWithDelay(fireRate, shoot, 0) -- Auto shoot
--- maskLoopTimer = timer.performWithDelay(1, maskLoop, 0)     
 maskLoopTimer = timer.performWithDelay(1, maskLoopArc, 0)                                          
-progressionMap = timer.performWithDelay(10000, progress, 0) -- Every 10 seconds, we check what we need to update
+progressionMap = timer.performWithDelay(1000, progress, 0) -- Every second, we check what we need to update
 
--- timer.performWithDelay(1, clockRotation, 0 )
 
 poggersLoop = timer.performWithDelay(2000, poggers, 0) -- Calling the night cycle function 
 listOfTimers = {gameLoopTimer, summoning, hourHandTimer, fireRateSpawner, maskLoopTimer, progressionMap, poggersLoop}
 
--- fireRate = timer.performWithDelay(750, shoot, 0) -- Auto shoot
--- AUTO SHOOT WILL BE BETTER THAN TAP AS TAP DOESNT ALWAYS REGISTER 
+    
 
 -- == Listeners == --
 Runtime:addEventListener( "key", onKeyEvent ) -- Add the key event listener
 Runtime:addEventListener( "mouse", onMouseEvent ) -- Add the mouse event listener.
--- background:addEventListener("tap", shoot)
-darkLayer:addEventListener("tap", shoot)
 Runtime:addEventListener( "collision", onCollision )
--- Runtime:addEventListener("hour-change", hourHandTimer)
 
--- Copy and pasted the whole thing from documentation
-local composer = require( "composer" )
+
+
+
  
-local scene = composer.newScene()
- 
--- -----------------------------------------------------------------------------------
--- Code outside of the scene event functions below will only be executed ONCE unless
--- the scene is removed entirely (not recycled) via "composer.removeScene()"
--- -----------------------------------------------------------------------------------
- 
- 
- 
- 
--- -----------------------------------------------------------------------------------
--- Scene event functions
--- -----------------------------------------------------------------------------------
  
 -- create()
-function scene:create( event )
- 
-    local sceneGroup = self.view
+
     -- Code here runs when the scene is first created but has not yet appeared on screen
  
 end
@@ -1321,10 +1109,12 @@ function scene:hide( event )
  
     if ( phase == "will" ) then
         -- Code here runs when the scene is on screen (but is about to go off screen)
- 
+        -- composer.removeScene( "game" )
+
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
- 
+        composer.removeScene( "game" )
+
     end
 end
  
@@ -1333,8 +1123,15 @@ end
 function scene:destroy( event )
  
     local sceneGroup = self.view
+    print("Game gone")
+    userInterface:removeSelf()
+    backgroundLayer:removeSelf()
+    mainLayer:removeSelf()
+    player:removeSelf()
+    treesLayer:removeSelf()
+    -- composer.gotoScene("menu")
     -- Code here runs prior to the removal of scene's view
- 
+    -- composer.removeScene( "game" )
 end
  
 -- -----------------------------------------------------------------------------------

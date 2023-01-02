@@ -9,6 +9,7 @@
 *.zip
 *.tar.gz
 *.rar
+*.mp4
 
 # IntelliJ
 /out/

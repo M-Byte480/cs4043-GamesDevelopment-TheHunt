@@ -1,6 +1,8 @@
 ------------------------ROGERS CODE---------------------------------------------
 
-
+--Material sourced from...
+--https://docs.coronalabs.com/guide/programming/04/index.html
+-- Minecraft Font: https://www.cufonfonts.com/font/minecraft-3 
 --Add this to game.lua to allow for a recorded highscore(dont have to include go to highscore scene)
 
 --local function endGame()
@@ -52,6 +54,7 @@ local function saveScores()
 end
 
 local function gotoMenu()
+  composer.removeScene( "highscore" )
   composer.gotoScene( "menu", { time=800, effect="crossFade" } )
 end
 ----------------------------------------------------------------------------------------
@@ -80,26 +83,31 @@ function scene:create( event )
       -- Saves scores
       saveScores()
 
-      local background = display.newImageRect( sceneGroup, "/resources/images/highscoreBackground.png", width, height )
+      local background = display.newImageRect( sceneGroup, "/resources/images/plainBackground.png", width, height )
       background.x = display.contentCenterX
       background.y = display.contentCenterY
+-- highscoreBackground taken from https://wallpapersmug.com/w/download/1920x1080/dark-night-river-forest-minimal-art-95afc818055
 
-      local highScoresHeader = display.newText( sceneGroup, "High Scores", display.contentCenterX, 115, native.systemFontBold, 65 )
+      local  highScoresHeader = display.newText(sceneGroup, "---High Scores---",display.contentCenterX, 700,"resources/font/1_MinecraftRegular1.otf",70)
+      highScoresHeader.x = display.contentCenterX
+      highScoresHeader.y = display.contentCenterY - 300
+
+
 
       for i = 1, 6 do
         if ( scoresTable[i] ) then
-            local yPos = 120 + ( i * 56 )
+            local yPos = display.contentCenterY - 200 + ( i * 56 )
 
-            local rankNum = display.newText(sceneGroup, i .. ")", display.contentCenterX, yPos, native.systemFont, 36 )
+            local rankNum = display.newText(sceneGroup, i .. ")", display.contentCenterX, yPos, "resources/font/1_MinecraftRegular1.otf", 46 )
             rankNum:setFillColor( 0.8 )
             rankNum.anchorX = 1
 
-            local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX, yPos, native.systemFont, 36 )
+            local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX, yPos, "resources/font/1_MinecraftRegular1.otf", 46 )
             thisScore.anchorX = 0
         end
       end
 
-    local menuButton = display.newText( sceneGroup, "Back To Menu", display.contentCenterX + 475, display.contentCenterY + 290, native.systemFontBold, 42)
+    local menuButton = display.newText( sceneGroup, "Back To Menu", display.contentCenterX + 475, display.contentCenterY + 290, "resources/font/1_MinecraftRegular1.otf", 42)
     menuButton:setFillColor( 0.75, 0.78, 1 )
     menuButton:addEventListener( "tap", gotoMenu )
 end
